@@ -11,14 +11,18 @@ const getIngredientCombination = (ingrs) => {
             let qty = ingrs[ikey];
             return [...Array(qty) ].map( (_,ix) => <BurgerIngredient key={ikey+ix} type={ikey} /> ) 
 
-    })
+    }).reduce((a,b) => a.concat(b) )
     
 }
 const burger = (props) => {
+    let ingredientsCombined = getIngredientCombination(props.ingredients);
+    if (!ingredientsCombined.length) ingredientsCombined = <p>Please start adding ingredients!</p>
+    console.log(ingredientsCombined);
+    
     return (
         <div className = {classes.Burger}>
             <BurgerIngredient type="bread-top"/>
-            {getIngredientCombination(props.ingredients)}
+            {ingredientsCombined}
             <BurgerIngredient type="bread-bottom" />
         </div>
     )
