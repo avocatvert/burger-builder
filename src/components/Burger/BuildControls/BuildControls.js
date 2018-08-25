@@ -22,12 +22,15 @@ const getBuildControls = (controlList,props) => {
 }
 
 
-
-
 const buildControls = (props) => (
     <div className = {classes.BuildControls}>
         <p><strong>Total price: ${props.totalPrice.toFixed(2)}</strong></p>
+
         {getBuildControls(controls, props)}
+
+        <button disabled={!props.canCompleteOrder} className={classes.OrderButton}>
+            COMPLETE YOUR ORDER
+        </button>
     </div>
 )
 

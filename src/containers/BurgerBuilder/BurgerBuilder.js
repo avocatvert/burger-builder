@@ -9,7 +9,7 @@ class BurgerBuilder extends Component {
     state = { 
                 ingredients: {cheese:0,meat:0,bacon:0,salad:0},
             };
-
+    DEFAULT_PRICE=3.99;
     prices = {
         cheese: 0.5,
         meat: 0.99,
@@ -38,8 +38,11 @@ class BurgerBuilder extends Component {
        const price =  Object.keys(this.prices)
         .map(k => this.prices[k]*this.state.ingredients[k])
         .reduce( (a,b) => a+b);
-       return price > 0 ? price + 3.99 : price
+       return price > 0 ? price + this.DEFAULT_PRICE : price
     };
+
+    //check if at least one ingredient is added so An order can be finalise
+    canCompleteOrder = () => Object.values(this.state.ingredients).some(e => e >0);
 
     //check if builcontrols button should be disable (when no specific ingredient)
     willButtonDisable = type => this.state.ingredients[type] === 0  ;
@@ -50,6 +53,7 @@ class BurgerBuilder extends Component {
                 <Burger ingredients = {this.state.ingredients}/>
                 <BuildControls 
                     totalPrice = {this.getPrice()}
+                    canCompleteOrder={this.canCompleteOrder()}
                     decrement={this.delIngredient}
                     increment={this.addIngredient}
                     isDisabled={this.willButtonDisable}
