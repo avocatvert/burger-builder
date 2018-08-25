@@ -7,8 +7,16 @@ const buildControl = (props) => (
 
     <div className={classes.BuildControl}> 
         <div className ={classes.Label}>{props.label}</div>
-        <button>Less</button>
-        <button>More</button>
+        <button 
+            onClick={props.decrement} 
+            className={classes.Less} 
+            disabled={props.isDisabled}
+            >Less</button>
+
+        <button 
+            onClick={props.increment} 
+            className={classes.More} 
+            >More</button>
 
     </div>
 )

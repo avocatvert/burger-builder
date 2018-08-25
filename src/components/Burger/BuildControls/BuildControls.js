@@ -11,16 +11,22 @@ const controls = [
     {label:'Cheese', type: 'cheese'}
 ];
 
-const getBuildControls = (controlList) => controlList.map(e =>  <BuildControl key={e.label} label={e.label} />)
+const getBuildControls = (controlList,props) => {
+    return controlList.map(e =>  <BuildControl 
+                                    key={e.label} 
+                                    label={e.label} 
+                                    increment={() => props.increment(e.type)} 
+                                    decrement={() => props.decrement(e.type)}
+                                    isDisabled ={props.isDisabled(e.type)}
+                                     />)
+}
 
 
 
 
-
-
-const buildControls = () => (
+const buildControls = (props) => (
     <div className = {classes.BuildControls}>
-        {getBuildControls(controls)}
+        {getBuildControls(controls, props)}
     </div>
 )
 

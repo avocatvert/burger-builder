@@ -2,7 +2,7 @@ import React from 'react';
 import BurgerIngredient from  './BurgerIngredient/BurgerIngredient';
 import classes from './Burger.css';
 
-
+// -----BUILD THE BURGER -----
 //loop over ingredients object ex obj = {'cheese':2} and build array 
 // [<burgeringredient type ='cheese'>,<burgeringredient type='cheese'> ] of dim = 2 (obj['cheese'])
 const getIngredientCombination = (ingrs) => {
