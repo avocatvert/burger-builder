@@ -26,6 +26,7 @@ const getBuildControls = (controlList,props) => {
 
 const buildControls = (props) => (
     <div className = {classes.BuildControls}>
+        <p><strong>Total price: ${props.totalPrice.toFixed(2)}</strong></p>
         {getBuildControls(controls, props)}
     </div>
 )
