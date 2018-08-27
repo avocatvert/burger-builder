@@ -18,6 +18,7 @@ class BurgerIngredient extends Component {
                     <div className = {classes.BreadTop}>
                         <div className = {classes.Seeds1}></div>
                         <div className = {classes.Seeds2}></div>
+                        <div className ={classes.Seeds3}></div>
                     </div>
                     );
                 break;
@@ -39,7 +40,7 @@ class BurgerIngredient extends Component {
                 break;
         
             default:
-                ingredient =null;
+                ingredient = <div className ={classes.noIngredient}>Please start adding ingredients!</div>;
         }
     
         return (

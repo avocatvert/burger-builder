@@ -16,9 +16,8 @@ const getIngredientCombination = (ingrs) => {
 }
 const burger = (props) => {
     let ingredientsCombined = getIngredientCombination(props.ingredients);
-    if (!ingredientsCombined.length) ingredientsCombined = <p>Please start adding ingredients!</p>
-    console.log(ingredientsCombined);
-    
+    ingredientsCombined = !ingredientsCombined.length ?  <BurgerIngredient type=''/> : ingredientsCombined;
+
     return (
         <div className = {classes.Burger}>
             <BurgerIngredient type="bread-top"/>

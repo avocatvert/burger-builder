@@ -1,39 +1,59 @@
 .Burger {
-    width:100%;
+    max-width:500px;
     margin: auto;
-    height:250px;
     text-align: center;
-    font-weight:bold;
     overflow:auto;
-    font-size: 1.4rem
+    background-color: white;
+    box-sizing: border-box;
 }
+
 
 /* overflow: scroll; */
 
 
-@meda (min-width;)
-
-@media (min-width: 350px) and (min-height:300px) {
+@media (min-width: 300px) and (min-height:500px) {
     .Burger{
-        width: 350px;
-        height: 300px
+        width: 300px;
+        height: 200px;
+    }
+}
+
+
+@media (min-width: 320px) and (min-height:520px) {
+    .Burger {
+        width: 320px;
+        height: 250px;
+    }
+}
+
+
+@media (min-width: 360px) and (min-height:640px) {
+    .Burger {
+        width: 360px;
+        height: 350px;
     }
 }
 
 
 @media (min-width: 500px) and (min-height:401px) {
     .Burger{
-        width: 450px;
-        height: 400px
+        width: 500px;
+        height: 475px;
+    }
+}
+
+@media (min-width: 700px) and (min-height:500px) {
+    .Burger {
+        width: 500px;
+        height: 450px;
     }
 }
 
 
 
-
 @media (min-width: 1000px) and (min-height:700px) {
     .Burger{
-        width: 700px;
-        height: 600px
+        width: 500px;
+        height: 450px
     }
 }

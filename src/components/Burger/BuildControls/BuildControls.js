@@ -32,7 +32,7 @@ const buildControls = (props) => (
             onClick ={props.isPurchasing}
             disabled={!props.canCompleteOrder} 
             className={classes.OrderButton}>
-            COMPLETE YOUR ORDER
+                Complete Order!
         </button>
     </div>
 )
