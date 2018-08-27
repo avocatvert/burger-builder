@@ -1,0 +1,56 @@
+.Modal {
+    position: fixed;
+    z-index: 500;
+    background-color: white;
+    width: 70%;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px black;
+    padding: 16px;
+    left: 15%;
+    top:30%;
+    overflow: auto;
+    box-sizing: border-box;
+    /*transition: all 5s ease-out;*/
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.3s;
+    animation-name: animatetop;
+    animation-duration: 2s
+}
+
+.Closer {
+    color:lightslategrey;
+    float: right;
+    font-size: 32px;
+    font-weight: bold;
+    transition: all 0.2s ease-in
+}
+
+.Closer:hover,
+.Closer:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 40px;
+}
+
+
+
+/* Add Animation */
+
+@-webkit-keyframes animatetop {
+    from {top:-2px;opacity: 0}
+    to {top:30%; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top: -2px; opacity: 0}
+    to {top:30%; opacity:1}
+}
+
+/* responsive */
+@media (min-width: 600px) {
+    .Modal {
+        width: 500px;
+        left: calc(50% - 250px);
+    }
+}
