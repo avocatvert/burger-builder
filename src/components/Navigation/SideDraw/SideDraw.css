@@ -1,6 +1,6 @@
 .SideDraw {
     position: fixed;
-    width: 280px;
+    width: 300px;
     max-width: 70%;
     height: 100%;
     left: 0;
@@ -30,4 +30,5 @@
 
 .Logo {
     height: 11%;
+    margin-bottom:40px;
 }

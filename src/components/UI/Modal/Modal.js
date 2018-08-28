@@ -8,7 +8,7 @@ const modal = (props) => (
    <Aux>
         <Backdrop 
             show={props.show} 
-            closeModal={props.closeModal}/>
+            close={props.closeModal}/>
         <div 
             className = {classes.Modal} 
             style={{

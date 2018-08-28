@@ -10,10 +10,10 @@ const Toolbar = props => {
     return (
         <header className={classes.Toolbar}>
             <div>MENU</div>
-            <div className={classes.Logo}>
+            <div className={classes.Logo + " "+ classes.DesktopOnly}>
                 <Logo/>
             </div>
-            <nav>
+            <nav className = {classes.DesktopOnly}>
                 <NavItems/>
             </nav>
         </header>
