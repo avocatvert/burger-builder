@@ -6,22 +6,28 @@ import SideDraw from '../Navigation/SideDraw/SideDraw';
 
 class Layout extends Component {
     state ={
-        isSideDrawOpen:true
+        isSideDrawOpen:false
     }
 
     closeSideDraw = () => {
         this.setState({isSideDrawOpen:false})
     }
 
+    toggleSideDraw = () => {
+        this.setState((prevState) => ({isSideDrawOpen: !prevState.isSideDrawOpen}))
+    }
 
     render(){
 
         return(
             <Aux>
                 <div> 
-                    <Toolbar/>
+                    <Toolbar toggleSideDraw = {this.toggleSideDraw}/>
                     <SideDraw 
-                        closeSideDraw = {this.closeSideDraw} open={this.state.isSideDrawOpen}/>
+                        closeSideDraw = {this.closeSideDraw} 
+                        open={this.state.isSideDrawOpen}
+                        toggleSideDraw={this.toggleSideDraw}
+                        />
                 </div>
                 <main className ={classes.Content}>
                     {this.props.children}
