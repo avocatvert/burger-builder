@@ -22,9 +22,9 @@
     font-family: inherit;
     font-size:80%; /*1.2em;*/
     font-weight: bold;
-    padding: 2px;
+    padding: 10px 10px;
     box-shadow: 2px 2px 2px #966909;
-    width: 40%
+    width: auto;
 }
 
 .OrderButton:hover,
