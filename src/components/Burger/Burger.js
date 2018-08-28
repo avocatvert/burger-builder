@@ -1,6 +1,7 @@
 import React from 'react';
 import BurgerIngredient from  './BurgerIngredient/BurgerIngredient';
 import classes from './Burger.css';
+import Aux from '../../hoc/Aux';
 
 // -----BUILD THE BURGER -----
 //loop over ingredients object ex obj = {'cheese':2} and build array 
@@ -19,7 +20,7 @@ const burger = (props) => {
     ingredientsCombined = !ingredientsCombined.length ?  <BurgerIngredient type=''/> : ingredientsCombined;
 
     return (
-        <div className = {classes.Burger}>
+        <div className={classes.Burger}>
             <BurgerIngredient type="bread-top"/>
             {ingredientsCombined}
             <BurgerIngredient type="bread-bottom" />

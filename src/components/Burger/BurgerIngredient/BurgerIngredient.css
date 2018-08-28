@@ -1,10 +1,11 @@
 .BreadBottom {
-    height: 16%;
+    height: 16% ;
     width: 80%;
     background: linear-gradient(#F08E4A, #e27b36);
     border-radius: 0 0 30px 30px;
     box-shadow: inset -15px 0 #c15711;
-    margin: 2% auto;
+    margin: 0% auto 15%;
+    position: relative;
 }
 
 .BreadTop {
@@ -13,8 +14,7 @@
     background: linear-gradient(#bc581e, #e27b36);
     border-radius: 50% 50% 0 0;
     box-shadow: inset -15px 0 #c15711;
-    margin: 1% auto;
-    margin-top:15%;
+    margin: 15% auto 1%;
     position: relative;
 }
 
@@ -173,6 +173,4 @@
     margin: 8% auto;
     /* font-size: 1.2rem; */
     font-weight:bold;
-
-
 }

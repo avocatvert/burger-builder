@@ -68,8 +68,9 @@ class BurgerBuilder extends Component {
                         />
 
                 </Modal>
-
+                
                 <Burger ingredients = {this.state.ingredients}/>
+                
                 <BuildControls 
                     totalPrice = {this.getPrice()}
                     canCompleteOrder={this.canCompleteOrder()}

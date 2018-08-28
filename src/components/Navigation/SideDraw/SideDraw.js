@@ -6,9 +6,11 @@ import classes from "./SideDraw.css";
 const SideDraw = () => {
     return (
         <div className={classes.SideDraw}>
-            <Logo/>
+            <div className={classes.Logo}>
+                <Logo/>
+            </div>
             <nav>
-                <NavItems/>;
+                <NavItems/>
             </nav>
         </div>
     );
