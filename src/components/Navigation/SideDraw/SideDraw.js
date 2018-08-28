@@ -18,7 +18,7 @@ const SideDraw = (props) => {
         <Aux>
             <Backdrop close ={props.closeSideDraw} show={props.open}/>
             <div className={cls}>
-                <div className={classes.Logo}>
+                <div className={classes.Logo} onClick={props.toggleSideDraw}>
                     <Logo/>
                 </div>
                 <nav>
