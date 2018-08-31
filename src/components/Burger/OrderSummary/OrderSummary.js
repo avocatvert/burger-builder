@@ -1,5 +1,5 @@
 import React ,{Component} from 'react';
-import Aux from '../../../hoc/Aux';
+import Aux from '../../../hoc/Aux/Aux';
 import Button from "../../UI/Button/Button";
 
 //this component doesn't need to be a class but can be a functional component

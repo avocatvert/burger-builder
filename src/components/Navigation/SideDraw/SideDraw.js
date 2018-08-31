@@ -3,7 +3,7 @@ import NavItems from "../NavItems/NavItems";
 import Logo from "../../Logo/Logo";
 import classes from "./SideDraw.css";
 import Backdrop from '../../UI/Backdrop/Backdrop';
-import Aux from '../../../hoc/Aux';
+import Aux from '../../../hoc/Aux/Aux';
 
 
 
