@@ -11,7 +11,7 @@ const controls = [
     {label:'Cheese', type: 'cheese'}
 ];
 
-const getBuildControls = (controlList,props) => {
+const gatherBuildControls = (controlList,props) => {
     return controlList.map(e =>  <BuildControl 
                                     key={e.label} 
                                     label={e.label} 
@@ -26,7 +26,7 @@ const buildControls = (props) => (
     <div className = {classes.BuildControls}>
         <p><strong>Total price: ${props.totalPrice}</strong></p>
 
-        {getBuildControls(controls, props)}
+        {gatherBuildControls(controls, props)}
 
         <button 
             onClick ={props.isPurchasing}
