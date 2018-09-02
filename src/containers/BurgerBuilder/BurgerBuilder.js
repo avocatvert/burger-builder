@@ -4,6 +4,7 @@ import Burger  from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import axios from '../../axios-orders';
 
 class BurgerBuilder extends Component {
     state = { 
@@ -51,7 +52,28 @@ class BurgerBuilder extends Component {
     willButtonDisable = type => this.state.ingredients[type] === 0  ;
     isPurchasing = () => (this.setState({purchasing:true}))
     stopPurchasing = () => (this.setState({purchasing:false}))
-    keepPurchasing = () => (alert('You continue!'))
+
+    keepPurchasing = () => {
+        const order = {
+            ingredients:this.state.ingredients,
+            price:this.getPrice(),
+            customer:{
+                name:'toto',
+                adress:{
+                    street:'food street 1',
+                    zipCode:'5555',
+                    country:'FoodLand'
+                },
+                email:'eat@eatfood.com'
+            },
+            deliveryMethod:'fastest'
+        }
+        //alert('You continue!')
+        axios.post('/orders.json', order)
+            .then(response => console.log(response)
+            .catch(error => console.log(error))
+            )
+    }
 
     render() {
         return (
