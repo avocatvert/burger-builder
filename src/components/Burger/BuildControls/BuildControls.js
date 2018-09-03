@@ -29,7 +29,7 @@ const buildControls = (props) => (
         {gatherBuildControls(controls, props)}
 
         <button 
-            onClick ={props.isPurchasing}
+            onClick ={props.startPurchase}
             disabled={!props.canCompleteOrder} 
             className={classes.OrderButton}>
                 Complete Order!

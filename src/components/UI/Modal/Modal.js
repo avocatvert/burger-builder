@@ -7,20 +7,22 @@ import Aux from '../../../hoc/Aux/Aux';
 class Modal extends Component {
 
     //re-render only if show is changed [true: display, false:close]
-    shouldComponentUpdate = (nextProps, nextState) => nextProps.show !== this.props.show;
+    shouldComponentUpdate = (nextProps, nextState) =>{
+        console.log('check ')
+        return nextProps.show !== this.props.show || nextProps.reRender !== this.props.reRender;
+    } 
     
     // --- lifecycle debug ---
-    // componentWillUpdate(){
-    //     console.log('[Modal will update]');
+    componentWillUpdate = () => console.log('[Modal will update]');
+         
         
-    // }
 
     render(){
         return (
                     <Aux>
                         <Backdrop 
                             show={this.props.show} 
-                            close={this.props.closeModal}/>
+                            close={this.props.close}/>
                         <div 
                             className = {classes.Modal} 
                             style={{
@@ -28,7 +30,7 @@ class Modal extends Component {
                             }} >
                             <span 
                                 className={classes.Closer}
-                                onClick={this.props.closeModal}
+                                onClick={this.props.close}
                                 >&times;</span>
                             {this.props.children}
                         </div>
