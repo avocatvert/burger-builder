@@ -4,7 +4,8 @@ import Burger  from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary,{getPrice} from '../../components/Burger/OrderSummary/OrderSummary';
-// import Spinner from '../../components/UI/Spinner/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+
 import axios from '../../axios-orders';
 
 class BurgerBuilder extends Component {
@@ -70,8 +71,8 @@ class BurgerBuilder extends Component {
         }
         //alert('You continue!')
         axios.post('/orders.json', order)
-            .then(response => {console.log(response); this.stopPurchase()})
-            .catch(error => {console.log(error); this.stopPurchase()})        
+            .then(response => { this.stopPurchase()})
+            .catch(error => { this.stopPurchase()})        
     }
         
     
@@ -111,4 +112,5 @@ class BurgerBuilder extends Component {
 
 };
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder,axios);
+//export default BurgerBuilder;
