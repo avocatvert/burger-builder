@@ -10,35 +10,43 @@ import axios from '../../axios-orders';
 
 class BurgerBuilder extends Component {
     state = { 
-                ingredients: {cheese:0,meat:0,bacon:0,salad:0},
+                ingredients: null,
                 purchaseStarted:false,
                 purchaseRunning: false
             };
 
-    
+    hasIngredients = () => this.state.ingredients != null;
+
     addIngredient = (type) => {
         const ingr = { ...this.state.ingredients }
-        ingr[type]+=1
-
-        this.setState({ingredients:ingr})
+        if (this.hasIngredients()) {
+            ingr[type]+=1
+            this.setState({ingredients:ingr})
+        }
+        
     };
 
     delIngredient = (type) => {
         const ingr = { ...this.state.ingredients }
-        if (ingr[type] > 0) {
+
+        if (this.hasIngredients() && ingr[type] > 0) {
             ingr[type]-=1
+            this.setState({ingredients:ingr})
         }
         
-        this.setState({ingredients:ingr})
+        
     };
 
     
 
     //check if at least one ingredient is added so An order can be finalise
-    canStartPurchase = () => Object.values(this.state.ingredients).some(e => e >0);
+    canStartPurchase = () => (
+        this.hasIngredients() && Object.values(this.state.ingredients).some(e => e >0)
+    )
+
 
     //check if builcontrols button should be disable (when no specific ingredient)
-    disableButton = type => this.state.ingredients[type] === 0  ;
+    ingredientIsZero = type => (this.hasIngredients() &&  this.state.ingredients[type] === 0 ) ;
 
     startPurchase = () => (this.setState({purchaseStarted:true}))
 
@@ -74,7 +82,15 @@ class BurgerBuilder extends Component {
             .then(response => { this.stopPurchase()})
             .catch(error => { this.stopPurchase()})        
     }
+
+    /* life cycle hook */
+    componentWillMount = () => {
+        axios.get('https://burgerbuilder-5a674.firebaseio.com/ingredients.json')
+        .then(
+            (response) => (this.setState({ingredients:response.data}))
+        ).catch(error => error);
         
+    }
     
     
     render() {
@@ -96,14 +112,14 @@ class BurgerBuilder extends Component {
 
                 </Modal>
                 
-                <Burger ingredients = {this.state.ingredients}/>
+                <Burger ingredients={this.state.ingredients}/>
                 
                 <BuildControls 
                     totalPrice = {getPrice(this.state.ingredients)}
                     canCompleteOrder={this.canStartPurchase()}
                     decrement={this.delIngredient}
                     increment={this.addIngredient}
-                    isDisabled={this.disableButton}
+                    isDisabled={this.ingredientIsZero}
                     startPurchase={this.startPurchase}
                  />
             </Aux>

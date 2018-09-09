@@ -6,6 +6,7 @@ import Spinner from '../../UI/Spinner/Spinner';
 
 //get actual price (sum of ingredientCount*ingredientPrice)+3.99
 const getPrice = (ingredients) => {
+    if (ingredients === null) return (0).toFixed(2);
     const DEFAULT_PRICE = 3.99;
     const prices = {
         cheese: 0.5,
@@ -14,8 +15,7 @@ const getPrice = (ingredients) => {
         salad: 0.3,
     };
     let price = Object.keys(prices)
-        .map(k => prices[k] * ingredients[k])
-        .reduce((a, b) => a + b);
+        .map(k => prices[k] * ingredients[k]).reduce((a, b) => a + b);
     price = price > 0 ? price + DEFAULT_PRICE : price
     return price.toFixed(2);
 };
@@ -32,16 +32,19 @@ class OrderSummary extends Component  {
     )) 
 
 
- 
 
     render(){
-        const totalPrice = getPrice(this.props.ingredients)
+        const ingredients = this.props.ingredients;
+
+        if (ingredients == null) return null;
+
+        const totalPrice = getPrice(ingredients)
         const SummaryDisplay=
             <Aux>
                 <h3> Your Order</h3>
                 <p>A delicious burger with the following ingredients: </p>
                 <ul>
-                    {this.getSummary(this.props.ingredients)}
+                    {this.getSummary(ingredients)}
                 </ul>
                 <p><strong> Total price: ${totalPrice}</strong> </p>
                 <p>Continue to checkout?</p>
@@ -49,7 +52,7 @@ class OrderSummary extends Component  {
                 <Button clicked={this.props.continue} btnType="Continue"> Continue</Button>
             </Aux>
         return (
-           this.props.spinMode ? <Spinner/> : SummaryDisplay
+           this.props.spinMode ? <Spinner message='Sending...'/> : SummaryDisplay
         )
     }
     
