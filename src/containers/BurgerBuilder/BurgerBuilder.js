@@ -88,8 +88,7 @@ class BurgerBuilder extends Component {
 
     /* life cycle hook */
     componentWillMount = () => {
-        console.log('WILL MOUNT');
-        axios.get('https://burgerbuilder-5a674.firebaseio.com/ingredients.json')
+        axios.get('/ingredients.json')
         .then(
             (response) => (this.setState({ingredients:response.data}))
         ).catch(error => error);
