@@ -12,12 +12,14 @@ class Checkout extends Component {
         }
     }
 
-    gotoBurgerBuilder = () => this.props.history.replace('/burger-builder');
+    gobacktoBurgerBuilder = () => this.props.history.goBack();
     
     render() {
+        console.log(this.props);
+        
         return (
             <div>
-                <CheckoutSummary ingredients={this.state.ingredients} cancel={this.gotoBurgerBuilder}/>
+                <CheckoutSummary ingredients={this.state.ingredients} cancel={this.gobacktoBurgerBuilder}/>
             </div>
         );
     }

@@ -60,7 +60,7 @@ class BurgerBuilder extends Component {
             this.sendingPurchase()
         }
 
-    goToCheckout = () => this.props.history.replace('/checkout')
+    goToCheckout = () => this.props.history.push('/checkout')
 
 
     
