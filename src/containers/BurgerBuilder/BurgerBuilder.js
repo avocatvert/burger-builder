@@ -3,7 +3,7 @@ import Aux from '../../hoc/Aux/Aux';
 import Burger  from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
-import OrderSummary,{getPrice} from '../../components/Burger/OrderSummary/OrderSummary';
+import OrderSummary,{getTotalPrice} from '../../components/Burger/OrderSummary/OrderSummary';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import axios from '../../axios-orders';
@@ -65,7 +65,7 @@ class BurgerBuilder extends Component {
         const ingredients = this.state.ingredients
         const order = {
             ingredients: ingredients,
-            price: getPrice(ingredients),
+            price: getTotalPrice(ingredients),
             customer: {
                 name: 'toto',
                 adress: {
@@ -115,7 +115,7 @@ class BurgerBuilder extends Component {
                 <Burger ingredients={this.state.ingredients}/>
                 
                 <BuildControls 
-                    totalPrice = {getPrice(this.state.ingredients)}
+                    totalPrice = {getTotalPrice(this.state.ingredients)}
                     canCompleteOrder={this.canStartPurchase()}
                     decrement={this.delIngredient}
                     increment={this.addIngredient}
