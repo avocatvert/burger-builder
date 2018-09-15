@@ -6,7 +6,9 @@ import classes from './Burger.css';
 // -----BUILD THE BURGER -----
 //loop over ingredients object ex obj = {'cheese':2} and build array 
 // [<burgeringredient type ='cheese'>,<burgeringredient type='cheese'> ] of dim = 2 (obj['cheese'])
+
 const combineIngredients = (ingrs) => {
+    
     const ikeys =  Object.keys(ingrs);
     return ikeys.map(  (ikey) => { 
             let qty = ingrs[ikey];

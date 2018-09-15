@@ -5,9 +5,9 @@ import classes from "./NavItems.css";
 function navItems(props) {
     return (
         <ul className={classes.NavItems}>
-            <NavItem link='/' active> Burger Builder</NavItem>
+            <NavItem link='/burger-builder' active> Burger Builder</NavItem>
 
-            <NavItem link="/"> Checkout </NavItem>
+            <NavItem link="/checkout"> Checkout </NavItem>
 
         </ul>
     );
