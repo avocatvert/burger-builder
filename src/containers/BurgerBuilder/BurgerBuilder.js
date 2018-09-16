@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+// import UTILS from '../../utils/utils';
 import Aux from '../../hoc/Aux/Aux';
 import Burger  from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
-import OrderSummary,{getTotalPrice}from '../../components/Burger/OrderSummary/OrderSummary';
+import BurgerSummary,{getTotalPrice}from '../../components/Summary/BurgerSummary/BurgerSummary';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import axios from '../../axios-orders';
@@ -60,9 +61,6 @@ class BurgerBuilder extends Component {
             this.sendingPurchase()
         }
 
-    goToCheckout = () => this.props.history.push('/checkout')
-
-
     
     sendingPurchase = () => {
         const ingredients = this.state.ingredients
@@ -86,19 +84,42 @@ class BurgerBuilder extends Component {
             .catch(error => { this.stopPurchase()})        
     }
 
-    /* life cycle hook */
-    componentWillMount = () => {
-        axios.get('/ingredients.json')
-        .then(
-            (response) => (this.setState({ingredients:response.data}))
-        ).catch(error => error);
-        
-    }
-    
-    componentWillUpdate = () => {console.log('WILL UPDATE');}
+  
+
+    //------QUERY PARAMS EXAMPLES----
+    enc = (x)=>encodeURIComponent(x)
+    goToCheckout = () => {
+        const query_= Object.entries(this.state.ingredients)
+                        .map((x) => this.enc(x[0])+'='+this.enc(x[1]))
+                        .join('&')
+        this.props.history.push({
+                pathname:'/checkout',
+                search:query_}
+            )
+        }
+
+
+      /*----------------- life cycle hook ------------------*/
+      componentWillMount = () => {
+          axios.get('/ingredients.json')
+              .then(
+                  (response) => (this.setState({
+                      ingredients: response.data
+                  }))
+              ).catch(error => error);
+
+      }
+
+    // componentWillUpdate = () => {console.log('WILL UPDATE ',this.props.history);}
+    // shouldComponentUpdate = (next) => {
+    //     return true
+    // };
+
+
+    //---------------RENDER------------------------// 
     
     render() {
-                
+                        
         return (
             <Aux>
                 <Modal 
@@ -106,7 +127,7 @@ class BurgerBuilder extends Component {
                     close={this.stopPurchase}
                     reRender={this.state.purchaseRunning}>
 
-                    <OrderSummary 
+                    <BurgerSummary 
                         ingredients={this.state.ingredients}
                         cancel={this.stopPurchase}
                         continue={this.goToCheckout}

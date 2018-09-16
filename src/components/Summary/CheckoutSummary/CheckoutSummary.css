@@ -1,0 +1,22 @@
+.CheckoutSummary{
+    width: 80%;
+    margin: auto;
+    text-align: center; 
+    /* border: 2px solid #ccc; */
+}
+
+
+
+.SummaryText {
+    background-color: white;
+    width: 60%;
+    /* border: 2px solid #ccc; */
+    /* box-shadow: 1px 1px 1px black; */
+    padding-left: 15%;
+    /* left: 25%; */
+    /* top:30%; */
+    /* overflow: auto; */
+    box-sizing: border-box;
+    text-align: left;
+    margin: auto ;
+}

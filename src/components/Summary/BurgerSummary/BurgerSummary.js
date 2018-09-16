@@ -3,13 +3,13 @@ import Aux from '../../../hoc/Aux/Aux';
 import Button from "../../UI/Button/Button";
 import Spinner from '../../UI/Spinner/Spinner';
 
-import Summary, {getTotalPrice} from  '../../Summary/Summary';
+import Summary, {getTotalPrice} from  '../Summary';
 
 
 
 
 //this component doesn't need to be a class but can be a functional component
-class OrderSummary extends Component  {
+class BurgerSummary extends Component  {
 
 
     render(){
@@ -41,5 +41,5 @@ class OrderSummary extends Component  {
 
 };
 
-export default OrderSummary;
+export default BurgerSummary;
 export {getTotalPrice};

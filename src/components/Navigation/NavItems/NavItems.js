@@ -2,12 +2,17 @@ import React from 'react';
 import NavItem  from './NavItem/NavItem';
 import classes from "./NavItems.css";
 
-function navItems(props) {
+function navItems() {
+    // let isActive=false
+    // const becomeActive = () => {isActive=true}
+    // console.log('isActive ', isActive);
+    
+
     return (
         <ul className={classes.NavItems}>
-            <NavItem link='/burger-builder' active> Burger Builder</NavItem>
+            <NavItem link='/burger-builder'> Burger Builder</NavItem>
 
-            <NavItem link="/checkout"> Checkout </NavItem>
+            <NavItem link="/checkout" > Checkout </NavItem>
 
         </ul>
     );

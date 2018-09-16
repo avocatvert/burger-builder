@@ -25,5 +25,6 @@ yarn-error.log*
 /public
 package-lock.json
 package.json
+yarn.lock
 
 registerServiceWorker.js

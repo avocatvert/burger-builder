@@ -11,7 +11,7 @@ import classes from './Burger.css';
 const combineIngredients = (ingrs) => {
     const ikeys =  Object.keys(ingrs);
     return ikeys.map(  (ikey) => { 
-            let qty = ingrs[ikey];
+            let qty = +ingrs[ikey];
             return [...Array(qty) ].map( (_,ix) => <BurgerIngredient key={ikey+ix} type={ikey} /> ) 
 
     }).reduce((a,b) => a.concat(b) )
@@ -21,7 +21,7 @@ const burger = (props) => {
     if (props.ingredients == null) return <Spinner message='Loading...'/>
     
     let ingredientsCombined = combineIngredients(props.ingredients);
-    ingredientsCombined = !ingredientsCombined.length ?  <BurgerIngredient type=''/> : ingredientsCombined;
+    ingredientsCombined = !ingredientsCombined.length ?  <BurgerIngredient type=''/> : ingredientsCombined;    
 
     return (
         <div className={classes.Burger}>
