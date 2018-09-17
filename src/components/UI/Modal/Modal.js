@@ -9,10 +9,11 @@ class Modal extends Component {
     //re-render only if show is changed [true: display, false:close]
     shouldComponentUpdate = (nextProps, nextState) =>{
         return nextProps.show !== this.props.show || nextProps.reRender !== this.props.reRender;
+        
     } 
     
     // --- lifecycle debug ---
-    componentWillUpdate = () => console.log('[Modal will update]');
+    //componentDidUpdate = () => console.log('[Modal Did update]');
          
         
 

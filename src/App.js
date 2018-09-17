@@ -15,8 +15,8 @@ class App extends Component {
         <BurgerBuilder/> */}
 
           <Switch>
-            <Redirect from='/' to='/burger-builder' exact/>
-            <Route path='/burger-builder' exact component={BurgerBuilder}/>
+            <Redirect from='/' to='/burger-builder' exact />
+            <Route path='/burger-builder'  component={BurgerBuilder}/>
             <Route path='/checkout' component={Checkout}/>
           </Switch>
           

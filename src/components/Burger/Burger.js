@@ -18,10 +18,11 @@ const combineIngredients = (ingrs) => {
     
 }
 const burger = (props) => {
-    if (props.ingredients == null) return <Spinner message='Loading...'/>
+    if (props.ingredients == null) return <Spinner message='Burger Loading...'/>
     
     let ingredientsCombined = combineIngredients(props.ingredients);
     ingredientsCombined = !ingredientsCombined.length ?  <BurgerIngredient type=''/> : ingredientsCombined;    
+    
 
     return (
         <div className={classes.Burger}>

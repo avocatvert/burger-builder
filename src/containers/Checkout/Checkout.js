@@ -13,8 +13,8 @@ class Checkout extends Component {
     //     }
     // }
 
-    _gobacktoBurgerBuilder = () => this.props.history.goBack();
-    _gotoContactData = () => this.props.history.replace('/checkout/contact-data')
+    _gobacktoBurgerBuilder = () => this.props.history.replace('/burger-builder');
+    _gotoContactData = () => this.props.history.replace('/checkout/contact-data');
 
     // use when component will mount (the url is already set with a query)
     

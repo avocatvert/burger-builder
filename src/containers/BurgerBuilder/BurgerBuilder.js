@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+ import {Route} from 'react-router-dom';
 // import UTILS from '../../utils/utils';
 import Aux from '../../hoc/Aux/Aux';
 import Burger  from '../../components/Burger/Burger';
@@ -11,13 +12,15 @@ import axios from '../../axios-orders';
 
 class BurgerBuilder extends Component {
     state = { 
-                ingredients: null,
+                ingredients:{bacon:0,meat:0,cheese:0,salad:0},
                 purchaseStarted:false,
-                purchaseRunning: false
+                purchaseRunning: false,
+                query:''
             };
 
     hasIngredients = () => this.state.ingredients != null;
-
+ 
+/* --------------BUILD CONTROLS ACTIVITIES SECTION -----------------*/
     addIngredient = (type) => {
         const ingr = { ...this.state.ingredients }
         if (this.hasIngredients()) {
@@ -33,35 +36,65 @@ class BurgerBuilder extends Component {
         if (this.hasIngredients() && ingr[type] > 0) {
             ingr[type]-=1
             this.setState({ingredients:ingr})
-        }
-        
-        
+        }   
     };
 
-    
-
     //check if at least one ingredient is added so An order can be finalise
-    canStartPurchase = () => (
-        this.hasIngredients() && Object.values(this.state.ingredients).some(e => e >0)
-    )
-
-
+    canStartPurchase = () => this.hasIngredients() && Object.values(this.state.ingredients).some(e => e >0)
+    
     //check if builcontrols button should be disable (when no specific ingredient)
-    ingredientIsZero = type => (this.hasIngredients() &&  this.state.ingredients[type] === 0 ) ;
+    isCountZero = type => (this.hasIngredients() &&  this.state.ingredients[type] === 0 ) ;
 
-    startPurchase = () => (this.setState({purchaseStarted:true}))
+    //launch burgerbuilder Modal
+    startPurchase = () => {
+        const query_ = this.ingredients2UrlQuery()
+        this.setState({purchaseStarted:true, query:query_})
+        
+        this.setOrderUrl(query_)        
+    }
 
     stopPurchase = () => (this.setState({
         purchaseStarted:false,
         purchaseRunning: false
     }))
 
-    continuePurchase = () => {
-            this.setState({purchaseRunning:true})
-            this.sendingPurchase()
-        }
+    setOrderUrl = (query) => {
+        this.props.history.push({
+            pathname: '/burger-builder/order',
+            search: query
+        })
+    }
+
+
+/*---------------------------------QUERY PARAMS SECTION-----------------------------*/
+    enc = (x) => encodeURIComponent(x)
+
+    ingredients2UrlQuery = () => (
+            Object.entries(this.state.ingredients)
+            .map((x) => this.enc(x[0]) + '=' + this.enc(x[1]))
+            .join('&')
+    )
+
+    setCheckoutUrl = () => {
+
+        this.props.history.push({
+            pathname: '/checkout',
+            search: this.state.query
+        })
+    }
+/*-----------------------------------------------------------------------------------*/
 
     
+    /*
+    continuePurchase = () => {
+        this.setState({
+            purchaseRunning: true
+        })
+        this.sendingPurchase()
+    }
+
+
+
     sendingPurchase = () => {
         const ingredients = this.state.ingredients
         const order = {
@@ -83,58 +116,48 @@ class BurgerBuilder extends Component {
             .then(response => { this.stopPurchase()})
             .catch(error => { this.stopPurchase()})        
     }
-
+    */
   
 
-    //------QUERY PARAMS EXAMPLES----
-    enc = (x)=>encodeURIComponent(x)
-    goToCheckout = () => {
-        const query_= Object.entries(this.state.ingredients)
-                        .map((x) => this.enc(x[0])+'='+this.enc(x[1]))
-                        .join('&')
-        this.props.history.push({
-                pathname:'/checkout',
-                search:query_}
-            )
-        }
-
-
-      /*----------------- life cycle hook ------------------*/
-      componentWillMount = () => {
-          axios.get('/ingredients.json')
-              .then(
-                  (response) => (this.setState({
-                      ingredients: response.data
-                  }))
-              ).catch(error => error);
-
+/*----------------- life cycle hook ------------------*/
+      componentDidMount = () => {
+          if (!this.state.ingredients ) {
+              
+            axios.get('/ingredients.json')
+                .then(
+                    (response) => (this.setState({
+                        ingredients: response.data
+                    }))
+                ).catch(error => error);
+          }
       }
 
-    // componentWillUpdate = () => {console.log('WILL UPDATE ',this.props.history);}
+    // componentDidUpdate = () => {console.log('WILL UPDATE ',this.props.history);}
     // shouldComponentUpdate = (next) => {
-    //     return true
+    //     return next.history.
     // };
 
 
     //---------------RENDER------------------------// 
     
     render() {
-                        
+                   
         return (
             <Aux>
-                <Modal 
-                    show={this.state.purchaseStarted}
-                    close={this.stopPurchase}
-                    reRender={this.state.purchaseRunning}>
+                <Route path={'/burger-builder/order'} render = { () => 
+                    <Modal 
+                        show={this.state.purchaseStarted}
+                        close={this.stopPurchase}
+                        reRender={this.state.purchaseRunning}>
 
-                    <BurgerSummary 
-                        ingredients={this.state.ingredients}
-                        cancel={this.stopPurchase}
-                        continue={this.goToCheckout}
-                        spinMode={this.state.purchaseRunning}
-                        />
-
-                </Modal>
+                        <BurgerSummary 
+                            ingredients={this.state.ingredients}
+                            cancel={this.stopPurchase}
+                            continue={this.setCheckoutUrl}
+                            spinMode={this.state.purchaseRunning}
+                            />
+                    </Modal>
+                }/>                
                 
                 <Burger ingredients={this.state.ingredients}/>
                 
@@ -143,7 +166,7 @@ class BurgerBuilder extends Component {
                     canCompleteOrder={this.canStartPurchase()}
                     decrement={this.delIngredient}
                     increment={this.addIngredient}
-                    isDisabled={this.ingredientIsZero}
+                    isDisabled={this.isCountZero}
                     startPurchase={this.startPurchase}
                  />
             </Aux>
