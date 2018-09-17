@@ -5,9 +5,10 @@ const _getDataFromURLQuery = (URLSEARCH) => {
     const u = new URLSearchParams(URLSEARCH);
     const k = {};
     for (let i of u.keys()) k[i] = (+u.get(i));
+    console.log("data ", k);
     return k;
 }
-const _isEmpty = (object_) => Object.entries(object_).length === 0;
+const _isEmpty = (object_) => (object_ === undefined || object_ ==null|| Object.entries(object_).length === 0);
 const _undefined2empty = (object_) => object_ === undefined ? '' : object_
 const _isDiff = (a,b) => {
     //handle undefined case

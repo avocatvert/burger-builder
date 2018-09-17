@@ -1,42 +1,62 @@
 import React, { Component } from 'react';
 import CheckoutSummary from '../../components/Summary/CheckoutSummary/CheckoutSummary';
-import UTILS from '../../utils/utils';
+import Aux from '../../hoc/Aux/Aux';
+
+import Utils from '../../utils/utils';
+
+import {Route} from 'react-router-dom';
+import ContactData from './ContactData/ContactData';
 
 class Checkout extends Component {
+    constructor(props) {
+        super(props);
+        this.ingredients_ = Utils._getDataFromURLQuery(this.props.location.search)  
+
+        this.maskSummmary=false
+    }
+    
 
     // state = {
-    //     ingredients:{
-    //         bacon:1,
-    //         cheese:1,
-    //         salad:1,
-    //         meat:1
-    //     }
+    //     ingredients:null
     // }
 
     _gobacktoBurgerBuilder = () => this.props.history.replace('/burger-builder');
-    _gotoContactData = () => this.props.history.replace('/checkout/contact-data');
+    _gotoContactData = () => {
+        this.props.history.replace('/checkout/contact-data');
+        this.maskSummmary=true
+    };
 
     // use when component will mount (the url is already set with a query)
+    // componentDidMount = () => this.setState({
+    //     ingredients: Utils._getDataFromURLQuery(this.props.location.search)
+    // });
+    
     
    // --------------------life cycle hook ------------------------------
-    componentWillMount = () => {this.ingredients_ = UTILS._getDataFromURLQuery(this.props.history.location.search)}
-    shouldComponentUpdate = (next) => UTILS._isDiff(next.history.location.search, this.props.history.location.search)
-    
-    
+    shouldComponentUpdate = (next) => (
+        Utils._isDiff(next.location.pathname, this.props.location.pathname) ||
+        Utils._isDiff(next.location.search, this.props.location.search) 
+        )    
 
-    render() {
-        
+    render() {   
+        console.log('mask? ', this.maskSummmary);     
         return (
-            UTILS._isEmpty(this.ingredients_) ? 
+         
+            Utils._isEmpty(this.ingredients_) ? 
                 <h2 style={{textAlign:'center', margin:'25% auto', height:'50%'}}>
                     Nothing to checkout Please add ingredients first and complete order!
                 </h2>
             :
-                <CheckoutSummary 
-                    ingredients={this.ingredients_} 
-                    cancel={this._gobacktoBurgerBuilder}
-                    continue={this._gotoContactData}
-                />     
+                <Aux>
+                    <CheckoutSummary 
+                        mask={this.maskSummmary}
+                        ingredients={this.ingredients_} 
+                        cancel={this._gobacktoBurgerBuilder}
+                        continue={this._gotoContactData}
+                    />  
+                    <Route path='/checkout/contact-data' component={ContactData}/>
+                </Aux>
+                   
         );
     }
 }
