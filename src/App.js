@@ -3,7 +3,10 @@ import './App.css';
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Checkout from './containers/Checkout/Checkout';
+import NotFound from './components/NotFound/NotFound';
+
 import {Route,Switch, Redirect} from 'react-router-dom';
+
 
 
 class App extends Component {
@@ -18,6 +21,7 @@ class App extends Component {
             <Redirect from='/' to='/burger-builder' exact />
             <Route path='/burger-builder'  component={BurgerBuilder}/>
             <Route path='/checkout' component={Checkout}/>
+            <Route component={NotFound}/>
           </Switch>
           
         </Layout>
