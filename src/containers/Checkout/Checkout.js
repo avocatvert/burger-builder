@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CheckoutSummary from '../../components/Summary/CheckoutSummary/CheckoutSummary';
+import CheckoutSummary,{getTotalPrice} from '../../components/Summary/CheckoutSummary/CheckoutSummary';
 import Aux from '../../hoc/Aux/Aux';
 
 import Utils from '../../utils/utils';
@@ -10,9 +10,11 @@ import ContactData from './ContactData/ContactData';
 class Checkout extends Component {
     constructor(props) {
         super(props);
-        this.ingredients_ = Utils._getDataFromURLQuery(this.props.location.search)  
+        this.ingredients = Utils._getDataFromURLQuery(props.location.search)  
 
         this.maskSummmary=false
+
+        this.totalPrice = getTotalPrice(this.ingredients)
     }
     
 
@@ -20,8 +22,8 @@ class Checkout extends Component {
     //     ingredients:null
     // }
 
-    _gobacktoBurgerBuilder = () => this.props.history.replace('/burger-builder');
-    _gotoContactData = () => {
+    _goback2BurgerBuilder = () => this.props.history.replace('/burger-builder');
+    _go2ContactData = () => {
         this.props.history.replace('/checkout/contact-data');
         this.maskSummmary=true
     };
@@ -39,22 +41,26 @@ class Checkout extends Component {
         )    
 
     render() {   
-        console.log('mask? ', this.maskSummmary);     
+
         return (
          
-            Utils._isEmpty(this.ingredients_) ? 
+            Utils._isEmpty(this.ingredients) ? 
                 <h2 style={{textAlign:'center', margin:'25% auto', height:'50%'}}>
                     Nothing to checkout Please add ingredients first and complete order!
                 </h2>
             :
                 <Aux>
                     <CheckoutSummary 
+                        totalPrice={this.totalPrice}
                         mask={this.maskSummmary}
-                        ingredients={this.ingredients_} 
-                        cancel={this._gobacktoBurgerBuilder}
-                        continue={this._gotoContactData}
+                        ingredients={this.ingredients} 
+                        cancel={this._goback2BurgerBuilder}
+                        continue={this._go2ContactData}
                     />  
-                    <Route path='/checkout/contact-data' component={ContactData}/>
+                    <Route path='/checkout/contact-data' 
+                        render = { 
+                            (props) => <ContactData {...props} ingredients={this.ingredients} totalPrice={this.totalPrice}/>
+                        }/>
                 </Aux>
                    
         );

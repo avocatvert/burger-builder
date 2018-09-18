@@ -1,0 +1,29 @@
+.Order {
+    width: 50%;
+    padding: 5px;
+    margin-bottom: 10px;
+    box-shadow: 1px 2px 2px 3px #ccc;
+    border: 1px #eeee;
+    border-radius: 5px;
+    box-sizing: border-box;
+    overflow-x: auto;
+    font-size: x-small;
+}
+
+
+.Item {
+    text-transform: capitalize;
+    display:inline-block;
+    margin: 0px 10px 0px 0px;
+    padding: 0px;
+    border: 1px solid #eeee;
+    box-sizing: border-box;
+}
+
+
+@media(max-width:735px){
+    .Order{
+        width:90%;
+        overflow-x: scroll;
+    }
+}

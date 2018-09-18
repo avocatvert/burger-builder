@@ -9,7 +9,7 @@ function spinner(props) {
         <Aux>   
             <div className={classes.Loader}>
             </div>
-            <p style={{textAlign:"center"}}>{props.message}</p>
+            <h4 style={{textAlign:"center"}}>{props.message}</h4>
         </Aux>
             
         

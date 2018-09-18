@@ -18,7 +18,7 @@ class BurgerSummary extends Component  {
 
         if (ingredients == null) return null;
 
-        const totalPrice = getTotalPrice(ingredients)
+        const totalPrice = this.props.totalPrice;
 
         const SummaryDisplay=
             <Aux>

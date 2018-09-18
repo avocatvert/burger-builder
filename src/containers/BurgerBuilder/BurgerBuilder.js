@@ -17,6 +17,7 @@ class BurgerBuilder extends Component {
                 purchaseRunning: false,
                 query:''
             };
+    totalPrice=(0).toFixed(2);        
 
     hasIngredients = () => this.state.ingredients != null;
  
@@ -50,7 +51,9 @@ class BurgerBuilder extends Component {
         const query_ = this.ingredients2UrlQuery()
         this.setState({purchaseStarted:true, query:query_})
         
-        this.setOrderUrl(query_)        
+        this.setOrderUrl(query_)     
+        
+        this.totalPrice = getTotalPrice(this.state.ingredients)
     }
 
     stopPurchase = () => (this.setState({
@@ -83,40 +86,6 @@ class BurgerBuilder extends Component {
         })
     }
 /*-----------------------------------------------------------------------------------*/
-
-    
-    /*
-    continuePurchase = () => {
-        this.setState({
-            purchaseRunning: true
-        })
-        this.sendingPurchase()
-    }
-
-
-
-    sendingPurchase = () => {
-        const ingredients = this.state.ingredients
-        const order = {
-            ingredients: ingredients,
-            price: getTotalPrice(ingredients),
-            customer: {
-                name: 'toto',
-                adress: {
-                    street: 'food street 1',
-                    zipCode: '5555',
-                    country: 'FoodLand'
-                },
-                email: 'eat@eatfood.com'
-            },
-            deliveryMethod: 'fastest'
-        }
-        //alert('You continue!')
-        axios.post('/orders.json', order)
-            .then(response => { this.stopPurchase()})
-            .catch(error => { this.stopPurchase()})        
-    }
-    */
   
 
 /*----------------- life cycle hook ------------------*/
@@ -151,6 +120,7 @@ class BurgerBuilder extends Component {
                         reRender={this.state.purchaseRunning}>
 
                         <BurgerSummary 
+                            totalPrice={this.totalPrice}
                             ingredients={this.state.ingredients}
                             cancel={this.stopPurchase}
                             continue={this.setCheckoutUrl}
@@ -162,7 +132,7 @@ class BurgerBuilder extends Component {
                 <Burger ingredients={this.state.ingredients}/>
                 
                 <BuildControls 
-                    totalPrice = {getTotalPrice(this.state.ingredients)}
+                    totalPrice = {this.totalPrice}
                     canCompleteOrder={this.canStartPurchase()}
                     decrement={this.delIngredient}
                     increment={this.addIngredient}

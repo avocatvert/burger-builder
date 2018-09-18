@@ -12,7 +12,7 @@ function navItems() {
         <ul className={classes.NavItems}>
             <NavItem link='/burger-builder'> Burger Builder</NavItem>
 
-            <NavItem link="/checkout" > Checkout </NavItem>
+            <NavItem link="/orders" > Orders </NavItem>
 
         </ul>
     );

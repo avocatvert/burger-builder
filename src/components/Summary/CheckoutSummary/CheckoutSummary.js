@@ -14,7 +14,7 @@ const maskElement= (shouldmask) => (
 const CheckoutSummary = (props) => {
     
 
-    const totalPrice = getTotalPrice(props.ingredients)
+    const totalPrice = props.totalPrice;
 
     const SummaryDisplay=
         <div className={classes.SummaryText}
@@ -49,3 +49,4 @@ const CheckoutSummary = (props) => {
 };
 
 export default CheckoutSummary;
+export {getTotalPrice};
