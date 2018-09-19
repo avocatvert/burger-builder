@@ -8,16 +8,75 @@ import Input from '../../../components/UI/Input/Input';
 
 class ContactData extends Component {
     state = {
-        customer: {
-            name: '',
-            adress: {
-                street: '',
-                zipCode: '',
-                country: ''
+
+        orderForm: {
+
+            name:{
+                elementType:'input',
+                elementConfig: {
+                    type : 'text',
+                    placeholder :'Your Name'
+                },
+                 value: ''
+            } ,
+
+
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Street'
+                },
+                value: ''
+            }, 
+
+
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Zip/Postal Code'
+                },
+                value: ''
             },
-            email: ''
-        },
+            
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Country'
+                },
+                value: ''
+            }, 
+            email: {
+                elementType: 'email',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your E-mail'
+                },
+                value: ''
+            },
+            deliveryMethod:{
+                elementType:'select',
+                elementConfig:{ options: [{value:'fasttest', children:'Fasttest'},
+                                            {value:'cheapest', children:'Cheapest'} ]
+                                },
+                value:'Fasttest'
+            }
+
+        }, //orderForm
         sendingPurchase:false
+    }//State
+
+
+    _onInputChange = (event,id) => {
+        const form = {...this.state.orderForm} //clone 
+        const formElement = {...form[id]} // deep clone into a form element
+
+        formElement.value = event.target.value //update value of element
+        form[id] = formElement  //update form with udpated element
+        
+        this.setState({orderForm:form})
     }
 
     sendData = (evt) => {
@@ -64,14 +123,25 @@ class ContactData extends Component {
             :
             <div className={classes.ContactData}>
                 <h4>Enter your contact Data</h4>
+
                 <form>
-                    <Input inputtype='input' type='text' name='steet' placeholder='Street'/>
-                    <Input inputtype='input' type='text' name='name' placeholder='Your Name'/>
-                    <Input inputtype='input' type='text' name='zipCode' placeholder='Postal/zip code'/>
-                    <Input inputtype='input' type='email' name='name' placeholder='Your email'/>
-                    <Input inputtype='input' type='text' name='country' placeholder='Country'/>
+
+
+                {
+                Object.entries(this.state.orderForm).map( form =>
+                    <Input key = {form[0]}
+                        elementType={form[1].elementType}
+                        elementConfig= {form[1].elementConfig } 
+                        value={form[1].value}
+                        changed={ event => this._onInputChange(event,form[0]) }
+                        />
+                    )
+                }
+                    
+                    <Button btnType='Continue' clicked={this.sendData}> ORDER </Button>
+
                 </form>
-                   <Button btnType='Continue' clicked={this.sendData}> ORDER </Button>
+                   
             </div>
         );
     }
