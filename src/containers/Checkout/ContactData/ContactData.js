@@ -3,6 +3,8 @@ import Button from '../../../components/UI/Button/Button';
 import classes from './ContactData.css';
 import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
+import Input from '../../../components/UI/Input/Input';
+
 
 class ContactData extends Component {
     state = {
@@ -63,13 +65,13 @@ class ContactData extends Component {
             <div className={classes.ContactData}>
                 <h4>Enter your contact Data</h4>
                 <form>
-                    <input className={classes.Input} type='email' name='name' placeholder='Your email'/>
-                    <input className={classes.Input} type='text' name='steet' placeholder='Street'/>
-                    <input className={classes.Input} type='text' name='name' placeholder='Your Name'/>
-                    <input className={classes.Input} type='text' name='zipCode' placeholder='Postal/zip code'/>
-                    <input className={classes.Input} type='text' name='country' placeholder='Country'/>
-                    <Button btnType='Continue' clicked={this.sendData}> ORDER </Button>
+                    <Input inputtype='input' type='text' name='steet' placeholder='Street'/>
+                    <Input inputtype='input' type='text' name='name' placeholder='Your Name'/>
+                    <Input inputtype='input' type='text' name='zipCode' placeholder='Postal/zip code'/>
+                    <Input inputtype='input' type='email' name='name' placeholder='Your email'/>
+                    <Input inputtype='input' type='text' name='country' placeholder='Country'/>
                 </form>
+                   <Button btnType='Continue' clicked={this.sendData}> ORDER </Button>
             </div>
         );
     }
