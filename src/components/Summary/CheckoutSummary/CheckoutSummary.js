@@ -1,7 +1,7 @@
 import React from 'react';
 import Burger from '../../Burger/Burger';
 // import Aux from '../../../hoc/Aux/Aux';
-import Summary,{getTotalPrice} from '../Summary';
+import Summary,{Functions} from '../Summary';
 
 import Button from '../../UI/Button/Button';
 
@@ -49,4 +49,4 @@ const CheckoutSummary = (props) => {
 };
 
 export default CheckoutSummary;
-export {getTotalPrice};
+export {Functions};

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CheckoutSummary,{getTotalPrice} from '../../components/Summary/CheckoutSummary/CheckoutSummary';
+import CheckoutSummary,{Functions as F} from '../../components/Summary/CheckoutSummary/CheckoutSummary';
 import Aux from '../../hoc/Aux/Aux';
 
 import Utils from '../../utils/utils';
@@ -14,7 +14,7 @@ class Checkout extends Component {
 
         this.maskSummmary=false
 
-        this.totalPrice = getTotalPrice(this.ingredients)
+        this.totalPrice = F.getTotalPrice(this.ingredients)
     }
     
 

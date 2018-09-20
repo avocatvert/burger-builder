@@ -5,7 +5,7 @@ import Aux from '../../hoc/Aux/Aux';
 import Burger  from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
-import BurgerSummary,{getTotalPrice}from '../../components/Summary/BurgerSummary/BurgerSummary';
+import BurgerSummary,{Functions as F} from '../../components/Summary/BurgerSummary/BurgerSummary';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import axios from '../../axios-orders';
@@ -25,8 +25,11 @@ class BurgerBuilder extends Component {
     addIngredient = (type) => {
         const ingr = { ...this.state.ingredients }
         if (this.hasIngredients()) {
-            ingr[type]+=1
-            this.setState({ingredients:ingr})
+            this.totalPrice = F.set2default(this.totalPrice)
+            
+            ingr[type]+=1;
+            this.totalPrice += F.Prices[type];
+            this.setState({ingredients:ingr});
         }
         
     };
@@ -35,8 +38,12 @@ class BurgerBuilder extends Component {
         const ingr = { ...this.state.ingredients }
 
         if (this.hasIngredients() && ingr[type] > 0) {
-            ingr[type]-=1
-            this.setState({ingredients:ingr})
+            this.totalPrice = F.set2default(this.totalPrice)
+
+            ingr[type]-=1;
+            this.totalPrice -= F.Prices[type];
+            this.totalPrice = F.reset2zero(this.totalPrice)
+            this.setState({ingredients:ingr});
         }   
     };
 
@@ -53,7 +60,7 @@ class BurgerBuilder extends Component {
         
         this.setOrderUrl(query_)     
         
-        this.totalPrice = getTotalPrice(this.state.ingredients)
+        this.totalPrice = F.getTotalPrice(this.state.ingredients)
     }
 
     stopPurchase = () => (this.setState({

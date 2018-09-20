@@ -3,7 +3,7 @@ import Aux from '../../../hoc/Aux/Aux';
 import Button from "../../UI/Button/Button";
 import Spinner from '../../UI/Spinner/Spinner';
 
-import Summary, {getTotalPrice} from  '../Summary';
+import Summary, {getTotalPrice, Functions} from  '../Summary';
 
 
 
@@ -42,4 +42,4 @@ class BurgerSummary extends Component  {
 };
 
 export default BurgerSummary;
-export {getTotalPrice};
+export {getTotalPrice,Functions};
