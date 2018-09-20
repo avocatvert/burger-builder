@@ -89,21 +89,18 @@ class ContactData extends Component {
     }
 
     sendingPurchase = () => {
-    
+        const orderData ={};
+        for (let k in this.state.orderForm){
+            orderData[k]= this.state.orderForm[k].value;
+        }
+
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.totalPrice,
-            customer: {
-                name: 'toto',
-                adress: {
-                    street: 'food street 1',
-                    zipCode: '5555',
-                    country: 'FoodLand'
-                },
-                email: 'eat@eatfood.com'
-            },
-            deliveryMethod: 'fastest'
-        }
+            order:orderData
+        };
+
+        console.log(order);
         //alert('You continue!')
         axios.post('/orders.json', order)
             .then(response => {
