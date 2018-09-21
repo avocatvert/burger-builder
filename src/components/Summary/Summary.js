@@ -1,16 +1,24 @@
 import React from 'react';
+import utils from '../../utils/utils';
+
+
 
  const Prices = {
-     cheese: 0.5,
+     cheese: 0.50,
      meat: 0.99,
-     bacon: 0.5,
-     salad: 0.3,
+     bacon: 0.50,
+     salad: 0.30,
      default:3.99
  };
 
+
+ const round2 =(v) => +((+v).toFixed(2))
+
+
 //get actual price (sum of ingredientCount*ingredientPrice)+3.99
-const getTotalPrice = (ingredients) => {
-    if (ingredients ==null) return (0).toFixed(2)
+const calcPrice = (ingredients) => {
+  
+    if (utils._isEmpty(ingredients)) return (0).toFixed(2)
     
     const DEFAULT_PRICE = Prices.default;
    
@@ -22,9 +30,9 @@ const getTotalPrice = (ingredients) => {
 };
 
 
-const isZeroPrice = (price) => +price===0 ;
-const reset2zero = (price) =>  +price === Prices.default? (0).toFixed(2): +price ;
-const set2default = (price) => +price ===0 ?  Prices.default : price ;
+const isZeroPrice = (price) => round2(price) ===0 ;
+const reset2zero = (price) =>  round2(price) === Prices.default? (0).toFixed(2): +price ;
+const set2default = (price) => isZeroPrice(price) ?  Prices.default : price ;
 
 
  const Summary = (ingrdts) => (Object.keys(ingrdts).map(
@@ -35,7 +43,14 @@ const set2default = (price) => +price ===0 ?  Prices.default : price ;
 
 
 
-const Functions = {getTotalPrice, Prices, isZeroPrice, reset2zero,set2default} 
+const Functions = {
+                    calcPrice, 
+                    Prices, 
+                    isZeroPrice, 
+                    reset2zero,
+                    set2default,
+                    round2
+                } 
 
 export default Summary;
 export {Functions}

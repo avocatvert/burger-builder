@@ -14,7 +14,7 @@ class Checkout extends Component {
 
         this.maskSummmary=false
 
-        this.totalPrice = F.getTotalPrice(this.ingredients)
+        this.totalPrice = F.calcPrice(this.ingredients)
     }
     
 

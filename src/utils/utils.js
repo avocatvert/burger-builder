@@ -1,6 +1,17 @@
 // utilities functions
 
 
+
+
+    const enc = (x) => encodeURIComponent(x)
+
+    const _data2UrlQuery = (kv) => (
+        Object.entries(kv)
+        .map((x) => enc(x[0]) + '=' + enc(x[1]))
+        .join('&')
+    )
+
+
 const _getDataFromURLQuery = (URLSEARCH) => {
     const u = new URLSearchParams(URLSEARCH);
     const k = {};
@@ -16,10 +27,11 @@ const _isDiff = (a,b) => {
 
 
 
-
-export default {  
-        _getDataFromURLQuery,
-        _isEmpty,
-        _undefined2empty,
-        _isDiff
-    }
+const utils = {
+    _getDataFromURLQuery,
+    _isEmpty,
+    _undefined2empty,
+    _isDiff,
+    _data2UrlQuery
+}
+export default utils;

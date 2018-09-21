@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
  import {Route} from 'react-router-dom';
-// import UTILS from '../../utils/utils';
+import utils from '../../utils/utils';
 import Aux from '../../hoc/Aux/Aux';
 import Burger  from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -17,7 +17,10 @@ class BurgerBuilder extends Component {
                 purchaseRunning: false,
                 query:''
             };
-    totalPrice=(0).toFixed(2);        
+    totalPrice= 0;
+
+    
+    showTotalPrice = () => (+this.totalPrice).toFixed(2);
 
     hasIngredients = () => this.state.ingredients != null;
  
@@ -29,6 +32,7 @@ class BurgerBuilder extends Component {
             
             ingr[type]+=1;
             this.totalPrice += F.Prices[type];
+            //this.totalPrice = this.totalPrice.toFixed(2)
             this.setState({ingredients:ingr});
         }
         
@@ -43,6 +47,7 @@ class BurgerBuilder extends Component {
             ingr[type]-=1;
             this.totalPrice -= F.Prices[type];
             this.totalPrice = F.reset2zero(this.totalPrice)
+            //this.totalPrice = this.totalPrice.toFixed(2)
             this.setState({ingredients:ingr});
         }   
     };
@@ -55,12 +60,12 @@ class BurgerBuilder extends Component {
 
     //launch burgerbuilder Modal
     startPurchase = () => {
-        const query_ = this.ingredients2UrlQuery()
+        const query_ = utils._data2UrlQuery(this.state.ingredients)
         this.setState({purchaseStarted:true, query:query_})
         
         this.setOrderUrl(query_)     
         
-        this.totalPrice = F.getTotalPrice(this.state.ingredients)
+        this.totalPrice = F.calcPrice(this.state.ingredients)
     }
 
     stopPurchase = () => (this.setState({
@@ -77,13 +82,6 @@ class BurgerBuilder extends Component {
 
 
 /*---------------------------------QUERY PARAMS SECTION-----------------------------*/
-    enc = (x) => encodeURIComponent(x)
-
-    ingredients2UrlQuery = () => (
-            Object.entries(this.state.ingredients)
-            .map((x) => this.enc(x[0]) + '=' + this.enc(x[1]))
-            .join('&')
-    )
 
     setCheckoutUrl = () => {
 
@@ -127,7 +125,7 @@ class BurgerBuilder extends Component {
                         reRender={this.state.purchaseRunning}>
 
                         <BurgerSummary 
-                            totalPrice={this.totalPrice}
+                            totalPrice={this.showTotalPrice()}
                             ingredients={this.state.ingredients}
                             cancel={this.stopPurchase}
                             continue={this.setCheckoutUrl}
@@ -139,7 +137,7 @@ class BurgerBuilder extends Component {
                 <Burger ingredients={this.state.ingredients}/>
                 
                 <BuildControls 
-                    totalPrice = {this.totalPrice}
+                    totalPrice = {this.showTotalPrice()}
                     canCompleteOrder={this.canStartPurchase()}
                     decrement={this.delIngredient}
                     increment={this.addIngredient}
