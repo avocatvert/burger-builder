@@ -10,73 +10,139 @@ class ContactData extends Component {
     state = {
 
         orderForm: {
-
-            name:{
-                elementType:'input',
-                elementConfig: {
-                    type : 'text',
-                    placeholder :'Your Name'
-                },
-                 value: ''
-            } ,
-
-
-            street: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Street'
-                },
-                value: ''
-            }, 
+            inputs: {
+                name: {
+                        elementType: 'input',
+                        elementConfig: {
+                            type: 'text',
+                            placeholder: 'Your Name'
+                        },
+                        value: '',
+                        validation: {
+                            isValid: false,
+                            required: true
+                        },
+                        touched: false
+                    },
 
 
-            zipCode: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Zip/Postal Code'
-                },
-                value: ''
-            },
-            
-            country: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Country'
-                },
-                value: ''
-            }, 
-            email: {
-                elementType: 'email',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Your E-mail'
-                },
-                value: ''
-            },
-            deliveryMethod:{
-                elementType:'select',
-                elementConfig:{ options: [{value:'fasttest', children:'Fasttest'},
-                                            {value:'cheapest', children:'Cheapest'} ]
+                    street: {
+                        elementType: 'input',
+                        elementConfig: {
+                            type: 'text',
+                            placeholder: 'Street'
+                        },
+                        value: '',
+                        validation: {
+                            isValid: false,
+                            required: true
+                        },
+                        touched: false
+                    },
+
+
+                    zipCode: {
+                        elementType: 'input',
+                        elementConfig: {
+                            type: 'text',
+                            placeholder: 'Zip/Postal Code'
+                        },
+                        value: '',
+                        validation: {
+                            isValid: false,
+                            required: true
+                        },
+                        touched: false
+                    },
+
+                    country: {
+                        elementType: 'input',
+                        elementConfig: {
+                            type: 'text',
+                            placeholder: 'Country'
+                        },
+                        value: '',
+                        validation: {
+                            isValid: false,
+                            required: true
+                        },
+                        touched: false
+                    },
+                    email: {
+                        elementType: 'email',
+                        elementConfig: {
+                            type: 'text',
+                            placeholder: 'Your E-mail'
+                        },
+                        value: '',
+                        validation: {
+                            isValid: false,
+                            required: true
+                        },
+                        touched: false
+                    },
+                    deliveryMethod: {
+                        elementType: 'select',
+                        elementConfig: {
+                            options: [{
+                                    value: 'fasttest',
+                                    children: 'Fasttest'
                                 },
-                value:'Fasttest'
-            }
-
+                                {
+                                    value: 'cheapest',
+                                    children: 'Cheapest'
+                                }
+                            ]
+                        },
+                        value: 'Fasttest',
+                        validation: {
+                            isValid: true,
+                            required: false,
+                        },
+                        touched: true
+                    }
+            }, //orderForm.input
+            allInputsValid: false,
         }, //orderForm
         sendingPurchase:false
     }//State
 
 
+
+    _checkValidity = (value,required) =>{
+        if(required){
+            value = value.trim();
+            const isMinLength = value.length >= 6
+            const isMaxLength = value.length < 20
+            return isMinLength && isMaxLength;
+        }
+        return true    
+    }
+
+
+    _allValid = () => (
+       ! Object.values(this.state.orderForm.inputs)
+        .some( (el) => !el.validation.isValid )
+    )
+                           
+
     _onInputChange = (event,id) => {
         const form = {...this.state.orderForm} //clone 
-        const formElement = {...form[id]} // deep clone into a form element
-
-        formElement.value = event.target.value //update value of element
-        form[id] = formElement  //update form with udpated element
+        const formInputs = {...form.inputs} //deep clone
+        const elt = {...formInputs[id]} // deep clone 
+        const eltValidation = {...elt.validation} // deep clone
         
-        this.setState({orderForm:form})
+        elt.value = event.target.value //update value of element
+        elt.touched=true
+        
+        //only when validation check is required
+        eltValidation.isValid = this._checkValidity(elt.value, eltValidation.required)
+        elt.validation = eltValidation  //change copy
+        
+        
+        formInputs[id] = elt  //update form.inputs with udpated element
+        form.inputs = formInputs
+        this.setState({orderForm : form })
     }
 
     sendData = (evt) => {
@@ -90,8 +156,8 @@ class ContactData extends Component {
 
     sendingPurchase = () => {
         const orderData ={};
-        for (let k in this.state.orderForm){
-            orderData[k]= this.state.orderForm[k].value;
+        for (let k in this.state.orderForm.inputs){
+            orderData[k]= this.state.orderForm.inputs[k].value;
         }
 
         const order = {
@@ -121,21 +187,26 @@ class ContactData extends Component {
             <div className={classes.ContactData}>
                 <h4>Enter your contact Data</h4>
 
-                <form>
+                <form onSubmit = {this.sendData}>
 
-
-                {
-                Object.entries(this.state.orderForm).map( form =>
-                    <Input key = {form[0]}
-                        elementType={form[1].elementType}
-                        elementConfig= {form[1].elementConfig } 
-                        value={form[1].value}
-                        changed={ event => this._onInputChange(event,form[0]) }
-                        />
-                    )
-                }
-                    
-                    <Button btnType='Continue' clicked={this.sendData}> ORDER </Button>
+                    {
+                    Object.entries(this.state.orderForm.inputs).map( elt =>
+                        <Input key = {elt[0]}
+                            elementType={elt[1].elementType}
+                            elementConfig= {elt[1].elementConfig } 
+                            value={elt[1].value}
+                            isValid={elt[1].validation.isValid}
+                            touched ={elt[1].touched}
+                            changed={ event => this._onInputChange(event,elt[0]) }
+                            />
+                        )
+                    }
+                        
+                        <Button 
+                            btnType='Continue' 
+                            disabled={ !this._allValid() }>
+                            ORDER 
+                        </Button>
 
                 </form>
                    

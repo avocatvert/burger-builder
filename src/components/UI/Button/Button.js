@@ -3,10 +3,12 @@ import classes from './Button.css';
 
 
 const button = (props) => {
-
+    let buttonStyle=classes.Button +" "+classes[props.btnType];
+    if (props.disabled) buttonStyle = classes.Button
     return (
         <button 
-            className={classes.Button+" "+classes[props.btnType]}
+            className={buttonStyle}
+            disabled={props.disabled}
             onClick={props.clicked}>
             {props.children} 
         </button>
