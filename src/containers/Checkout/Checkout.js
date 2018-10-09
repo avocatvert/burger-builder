@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CheckoutSummary,{Functions as F} from '../../components/Summary/CheckoutSummary/CheckoutSummary';
+import CheckoutSummary from '../../components/Summary/CheckoutSummary/CheckoutSummary';
 import Aux from '../../hoc/Aux/Aux';
 
 import Utils from '../../utils/utils';
@@ -7,20 +7,12 @@ import Utils from '../../utils/utils';
 import {Route} from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
 
+import {connect} from 'react-redux';
+
 class Checkout extends Component {
-    constructor(props) {
-        super(props);
-        this.ingredients = Utils._getDataFromURLQuery(props.location.search)  
-
-        this.maskSummmary=false
-
-        this.totalPrice = F.calcPrice(this.ingredients)
-    }
     
+    maskSummmary = false
 
-    // state = {
-    //     ingredients:null
-    // }
 
     _goback2BurgerBuilder = () => this.props.history.replace('/burger-builder');
     _go2ContactData = () => {
@@ -44,22 +36,25 @@ class Checkout extends Component {
 
         return (
          
-            Utils._isEmpty(this.ingredients) ? 
+            this.props.totalPrice ===0 ? 
                 <h2 style={{textAlign:'center', margin:'25% auto', height:'50%'}}>
                     Nothing to checkout Please add ingredients first and complete order!
                 </h2>
             :
                 <Aux>
                     <CheckoutSummary 
-                        totalPrice={this.totalPrice}
+                        totalPrice={this.props.totalPrice}
                         mask={this.maskSummmary}
-                        ingredients={this.ingredients} 
+                        ingredients={this.props.ingredients} 
                         cancel={this._goback2BurgerBuilder}
                         continue={this._go2ContactData}
                     />  
                     <Route path='/checkout/contact-data' 
                         render = { 
-                            (props) => <ContactData {...props} ingredients={this.ingredients} totalPrice={this.totalPrice}/>
+                            (props) => <ContactData {...props} 
+                                        ingredients={this.props.ingredients} 
+                                        totalPrice={this.props.totalPrice}
+                                        />
                         }/>
                 </Aux>
                    
@@ -67,4 +62,8 @@ class Checkout extends Component {
     }
 }
 
-export default Checkout;
+
+const mapStateToProps = (state) => (
+    {ingredients: state.ingredients, totalPrice: (+state.totalPrice).toFixed(2)}
+)
+export default connect(mapStateToProps)(Checkout);

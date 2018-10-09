@@ -1,0 +1,5 @@
+export const ADD_INGREDIENT = 'ADD_INGREDIENT';
+export const DEL_INGREDIENT = 'DEL_INGREDIENT';
+
+
+export const SHOW_PRICE = 'SHOW_PRICE';
