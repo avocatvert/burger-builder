@@ -1,5 +1,5 @@
-import * as actionTypes from './actions';
-import {Functions as F} from '../components/Summary/Summary';
+import * as actionTypes from '../actions/actionTypes';
+import {Functions as F} from '../../components/Summary/Summary';
 
 const initState = 
 {

@@ -9,15 +9,21 @@ import ContactData from './ContactData/ContactData';
 
 import {connect} from 'react-redux';
 
+
+const BURGER_BUILDER_PATH = '/burger-builder';
+const CONTACT_DATA_PATH = '/checkout/contact-data';
+
+
 class Checkout extends Component {
     
-    maskSummmary = false
+    state = {maskSummmary:false };
+    willMaskSummary = () => this.props.location.pathname === CONTACT_DATA_PATH || this.state.maskSummmary;
 
 
-    _goback2BurgerBuilder = () => this.props.history.replace('/burger-builder');
+    _goback2BurgerBuilder = () => this.props.history.replace(BURGER_BUILDER_PATH);
     _go2ContactData = () => {
-        this.props.history.replace('/checkout/contact-data');
-        this.maskSummmary=true
+        this.props.history.replace(CONTACT_DATA_PATH);
+        this.setState({maskSummmary:true})
     };
 
     // use when component will mount (the url is already set with a query)
@@ -33,10 +39,11 @@ class Checkout extends Component {
         )    
 
     render() {   
-
+    
+        
         return (
          
-            this.props.totalPrice ===0 ? 
+            (+this.props.totalPrice) ===0 ? 
                 <h2 style={{textAlign:'center', margin:'25% auto', height:'50%'}}>
                     Nothing to checkout Please add ingredients first and complete order!
                 </h2>
@@ -44,18 +51,12 @@ class Checkout extends Component {
                 <Aux>
                     <CheckoutSummary 
                         totalPrice={this.props.totalPrice}
-                        mask={this.maskSummmary}
+                        mask={this.willMaskSummary()}
                         ingredients={this.props.ingredients} 
                         cancel={this._goback2BurgerBuilder}
                         continue={this._go2ContactData}
                     />  
-                    <Route path='/checkout/contact-data' 
-                        render = { 
-                            (props) => <ContactData {...props} 
-                                        ingredients={this.props.ingredients} 
-                                        totalPrice={this.props.totalPrice}
-                                        />
-                        }/>
+                    <Route path='/checkout/contact-data' component={ContactData} />
                 </Aux>
                    
         );
@@ -64,6 +65,11 @@ class Checkout extends Component {
 
 
 const mapStateToProps = (state) => (
-    {ingredients: state.ingredients, totalPrice: (+state.totalPrice).toFixed(2)}
+    {
+        ingredients: state.burgerBuilder.ingredients, 
+        totalPrice: (+state.burgerBuilder.totalPrice).toFixed(2)
+    }
 )
+
+
 export default connect(mapStateToProps)(Checkout);

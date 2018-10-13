@@ -48,5 +48,7 @@ const CheckoutSummary = (props) => {
     );
 };
 
+
+
 export default CheckoutSummary;
 export {Functions};
