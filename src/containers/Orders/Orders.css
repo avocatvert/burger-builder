@@ -3,3 +3,10 @@
     margin-left: 15px;
     overflow-y: auto;
 }
+
+.ErrorOrEmpty {
+
+    text-align: center;
+    margin: 20%
+ 
+}

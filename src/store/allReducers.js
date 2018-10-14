@@ -1,4 +1,5 @@
-export {default as burgerBuilder} from './reducers/bugerBuilderReducer' ;
+export {default as burgerBuilderRDUX} from './reducers/bugerBuilderReducer' ;
+export {default as orderRDUX} from './reducers/orderReducer';
 
 
 

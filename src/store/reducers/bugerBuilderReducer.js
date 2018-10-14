@@ -7,6 +7,8 @@ const initState =
     totalPrice:0
 }
 
+const resetState = () => initState
+
 const incrementIngredient = (state, ingType) => {
     const ingr_c = { ...state.ingredients}
     let totalPrice_c = F.set2default(state.totalPrice)
@@ -47,6 +49,8 @@ const reducer = (state=initState, action) => {
         case actionTypes.DEL_INGREDIENT:
             newState =  decrementIngredient(state, action.ingredientType)
             return newState
+
+        case actionTypes.RESET_INGREDIENTS: return resetState()
 
         default: return state
     }

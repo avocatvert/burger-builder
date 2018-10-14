@@ -1,34 +1,21 @@
 import React, { Component } from 'react';
 import Order from '../../components/Order/Order';
+import ErrorOrEmpty from './ErrorOrEmpty';
 
 import classes from './Orders.css';
 import axios from '../../axios-orders';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions/orderActions';
+
 
 class Orders extends Component {
-
-    state={
-       
-        orders:null,
-    }
-
-
-    fetchOrders =() => {
-        axios.get('/orders.json')
-        .then((resp) => {
-                            this.setState({
-                                orders:resp.data,
-                            }); 
-                        }
-        ).catch( err => console.error(err)
-        )
-    }
-
+  
 
     parseOrders = () => {
-        const orders = this.state.orders;
+        const orders = this.props.orders;
         const allorders = Object.keys(orders)
                 .map(k =>  
                     {  
@@ -38,20 +25,44 @@ class Orders extends Component {
                 return allorders 
     }
 
-    componentDidMount = ()=>  { 
-                this.fetchOrders(); 
-            }
+    componentDidMount = ()=>  { this.props.fetchOrders('orders.json'); }
+
 
     render() {
+        const orderVsSpinnerVsNodata = 
+        this.props.orders ? 
+            this.parseOrders() :
+        this.props.hasFetched ? 
+            <ErrorOrEmpty message='No Orders History was Found ...'/> :
+        this.props.error ? 
+            <ErrorOrEmpty message='Sorry Orders Could not be Loaded...'/> :
+        <Spinner message = 'Loading...' />
+
+
         return (
             <div className={classes.Orders}>
-                {
-                    this.state.orders ? this.parseOrders() : <Spinner message='Loading...' />
-                }
-
+                { orderVsSpinnerVsNodata}
             </div>
         );
     }
 }
 
-export default withErrorHandler(Orders,axios);
+
+
+const mapStateToProps = state => (
+    {
+        orders : state.orderRDUX.orders,
+        hasFetched: state.orderRDUX.hasFetched,
+        error : state.orderRDUX.error
+    }
+)
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchOrders : (jsonFile) => dispatch( actions.fetchData(jsonFile) )
+    }
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)( withErrorHandler(Orders,axios) );

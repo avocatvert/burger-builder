@@ -8,12 +8,13 @@ import Input from '../../../components/UI/Input/Input';
 import orderForm from './orderForm';
 
 import {connect} from 'react-redux';
+import * as actions from '../../../store/actions/burgerActions';
 
 
 
 class ContactData extends Component {
 
-    state = {orderForm, sendingPurchase:false};
+    state = {orderForm, purchaseRunning:false};
 
 
     _checkValidity = (value,required) =>{
@@ -73,16 +74,18 @@ class ContactData extends Component {
             order:orderData
         };
 
-        console.log(order);
+        // console.log(order);
         //alert('You continue!')
         axios.post('/orders.json', order)
             .then(response => {
                 this.setState({purchaseRunning:false});
-                this.props.history.push('/');
+                this.props.resetIngredients();
+                this.props.history.push('/');    
             })
             .catch(error => {
                 this.setState({purchaseRunning:false});
-                this.props.history.push('/');
+                this.props.resetIngredients();
+                this.props.history.push('/');    
             })
     }
 
@@ -114,18 +117,20 @@ class ContactData extends Component {
                             disabled={ !this._allValid() }>
                             ORDER 
                         </Button>
-
-                </form>
-                   
+                </form> 
             </div>
         );
     }
 }
 
-
 const mapStateToProps = state => ({
-    ingredients: state.burgerBuilder.ingredients,
-    totalPrice: (+state.burgerBuilder.totalPrice).toFixed(2)
+    ingredients: state.burgerBuilderRDUX.ingredients,
+    totalPrice: (+state.burgerBuilderRDUX.totalPrice).toFixed(2)
 })
 
-export default connect(mapStateToProps)(ContactData);
+
+const mapDispatchToProps =  dispatch => ({
+    resetIngredients : () => dispatch(actions.resetIngredients())
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(ContactData);

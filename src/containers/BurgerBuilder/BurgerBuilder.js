@@ -125,8 +125,8 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => (
     {
-        ingredients: state.burgerBuilder.ingredients,
-        totalPrice: (+state.burgerBuilder.totalPrice).toFixed(2)
+        ingredients: state.burgerBuilderRDUX.ingredients,
+        totalPrice: (+state.burgerBuilderRDUX.totalPrice).toFixed(2)
     }
 )
 

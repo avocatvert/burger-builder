@@ -12,3 +12,7 @@ export const delIngredient = ingT => ({
     ingredientType: ingT
 })
 
+
+export const resetIngredients = () => ({
+    type:actionTypes.RESET_INGREDIENTS
+})
