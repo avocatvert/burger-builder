@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './Toolbar.css';
+import classes from './Toolbar.module.css';
 import Logo from "../../Logo/Logo";
 import NavItems from '../NavItems/NavItems';
-import DrawToggle from '../SideDraw/DrawToggle/DrawToggle';
+import SideDrawToggle from './SideDrawToggle/SideDrawToggle';
 
 
 //import PropTypes from 'prop-types';
@@ -10,7 +10,7 @@ import DrawToggle from '../SideDraw/DrawToggle/DrawToggle';
 const Toolbar = props => {
     return (
         <header className={classes.Toolbar}>
-            <DrawToggle toggleSideDraw={props.toggleSideDraw}/>
+            <SideDrawToggle toggleSideDraw={props.toggleSideDraw}/>
             <div className={classes.Logo}>
                 <Logo/>
             </div>

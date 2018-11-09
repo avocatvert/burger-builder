@@ -1,9 +1,8 @@
 import React from 'react';
 import NavItems from "../NavItems/NavItems";
 import Logo from "../../Logo/Logo";
-import classes from "./SideDraw.css";
+import classes from "./SideDraw.module.css";
 import Backdrop from '../../UI/Backdrop/Backdrop';
-import Aux from '../../../hoc/Aux/Aux';
 
 
 
@@ -15,7 +14,7 @@ const SideDraw = (props) => {
     
 
     return (
-        <Aux>
+        <React.Fragment>
             <Backdrop close ={props.closeSideDraw} show={props.open}/>
             <div className={cls}>
                 <div className={classes.Logo} onClick={props.toggleSideDraw}>
@@ -25,7 +24,7 @@ const SideDraw = (props) => {
                     <NavItems/>
                 </nav>
             </div>
-        </Aux>
+        </React.Fragment>
     );
 };
 

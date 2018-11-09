@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
  import {Route} from 'react-router-dom';
 import utils from '../../utils/utils';
-import Aux from '../../hoc/Aux/Aux';
 import Burger  from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
@@ -88,7 +87,7 @@ class BurgerBuilder extends Component {
     render() {
                    
         return (
-            <Aux>
+            <React.Fragment>
                 <Route path={'/burger-builder/order'} render = { () => 
                     <Modal 
                         show={this.state.purchaseStarted}
@@ -115,7 +114,7 @@ class BurgerBuilder extends Component {
                     isDisabled={this.isCountZero}
                     startPurchase={this.startPurchase}
                  />
-            </Aux>
+            </React.Fragment>
         )
     }
 

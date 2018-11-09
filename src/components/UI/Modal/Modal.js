@@ -1,7 +1,6 @@
 import  React,{Component} from 'react';
-import classes from  './Modal.css';
+import classes from  './Modal.module.css';
 import Backdrop from '../Backdrop/Backdrop';
-import Aux from '../../../hoc/Aux/Aux';
 
 
 class Modal extends Component {
@@ -19,14 +18,15 @@ class Modal extends Component {
 
     render(){
         return (
-                    <Aux>
+                    <React.Fragment>
                         <Backdrop 
                             show={this.props.show} 
                             close={this.props.close}/>
                         <div 
                             className = {classes.Modal} 
                             style={{
-                                display: this.props.show? null : 'none' 
+                                display: this.props.show? null : 'none' ,
+                                ...this.props.style
                             }} >
                             <span 
                                 className={classes.Closer}
@@ -34,7 +34,7 @@ class Modal extends Component {
                                 >&times;</span>
                             {this.props.children}
                         </div>
-                    </Aux>
+                    </React.Fragment>
                 )
     }
 } 

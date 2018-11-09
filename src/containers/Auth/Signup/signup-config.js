@@ -1,7 +1,7 @@
-const inputs=  {
+const inputs = {
     firstName: {
         configs: {
-            name:'First Name',
+            name: 'First Name',
             type: 'text',
             placeholder: ''
         },
@@ -49,7 +49,7 @@ const inputs=  {
     },
     street: {
         configs: {
-            name:'Street',
+            name: 'Street',
             type: 'text',
             placeholder: ''
         },
@@ -66,7 +66,7 @@ const inputs=  {
 
     zipCode: {
         configs: {
-            name:'Zip/Postal Code',
+            name: 'Zip/Postal Code',
             type: 'text',
             placeholder: ''
         },
@@ -81,7 +81,7 @@ const inputs=  {
 
     country: {
         configs: {
-            name:'Country',
+            name: 'Country',
             type: 'text',
             placeholder: ''
         },
@@ -94,29 +94,6 @@ const inputs=  {
         value: '',
         isValid: false,
         touched: false
-    },
-
-    deliveryMethod: {
-        configs: {
-            name:'Delivery Method',
-            options: [
-                {
-                    value: 'fasttest',
-                    labeled: 'Fasttest'
-                },
-                {
-                    value: 'cheapest',
-                    labeled: 'Cheapest'
-                }
-            ]
-        },
-        validations: {
-            required: false
-        },
-        field: 'select',
-        value: 'Fasttest',
-        isValid: true,
-        touched: true
     }
 } //orderForm.input
 

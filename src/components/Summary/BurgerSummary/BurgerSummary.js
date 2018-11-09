@@ -1,9 +1,7 @@
 import React ,{Component} from 'react';
-import Aux from '../../../hoc/Aux/Aux';
 import Button from "../../UI/Button/Button";
 import Spinner from '../../UI/Spinner/Spinner';
-
-import Summary, {getTotalPrice, Functions} from  '../Summary';
+import IngredientSummary from '../IngredientSummary';
 
 
 
@@ -14,25 +12,22 @@ class BurgerSummary extends Component  {
 
     render(){
    
-        const ingredients = this.props.ingredients;
+        const {ingredients, totalPrice} = this.props;
 
         if (ingredients == null) return null;
 
-        const totalPrice = this.props.totalPrice;
-
         const SummaryDisplay=
-            <Aux>
+            <React.Fragment>
                 <h3> Your Order</h3>
                 <p>A delicious burger with the following ingredients: </p>
                 <ul>
-                    {Summary(ingredients)}
-
+                    <IngredientSummary ingredients={ingredients}/>
                 </ul>
                 <p><strong> Total price: ${totalPrice}</strong> </p>
                 <p>Continue to checkout?</p>
                 <Button clicked={this.props.cancel} btnType="Cancel">Cancel</Button>
                 <Button clicked={this.props.continue} btnType="Continue"> Continue</Button>
-            </Aux>
+            </React.Fragment>
         return (
            this.props.spinMode ? <Spinner message='Sending...'/> : SummaryDisplay
         )
@@ -42,4 +37,3 @@ class BurgerSummary extends Component  {
 };
 
 export default BurgerSummary;
-export {getTotalPrice,Functions};

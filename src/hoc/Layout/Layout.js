@@ -1,38 +1,37 @@
 import React , {Component} from 'react';
-import Aux from '../Aux/Aux';
-import classes from './Layout.css';
+import classes from './Layout.module.css';
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import SideDraw from '../../components/Navigation/SideDraw/SideDraw';
 
 class Layout extends Component {
     state ={
-        isSideDrawOpen:false
+        willSideDrawOpen:false
     }
 
     closeSideDraw = () => {
-        this.setState({isSideDrawOpen:false})
+        this.setState({willSideDrawOpen:false})
     }
 
     toggleSideDraw = () => {
-        this.setState((prevState) => ({isSideDrawOpen: !prevState.isSideDrawOpen}))
+        this.setState((prevState) => ({willSideDrawOpen: !prevState.willSideDrawOpen}))
     }
 
     render(){
 
         return(
-            <Aux>
+            <React.Fragment>
                 <div> 
                     <Toolbar toggleSideDraw = {this.toggleSideDraw}/>
                     <SideDraw 
                         closeSideDraw = {this.closeSideDraw} 
-                        open={this.state.isSideDrawOpen}
+                        open={this.state.willSideDrawOpen}
                         toggleSideDraw={this.toggleSideDraw}
                         />
                 </div>
                 <main className ={classes.Content}>
                     {this.props.children}
                 </main>
-            </Aux>
+            </React.Fragment>
         )
 
     }

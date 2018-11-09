@@ -1,5 +1,5 @@
 import React from 'react';
-import classes  from './Orders.css';
+import classes  from './Orders.module.css';
 
 const ErrorOrEmpty = (props) => {
     return (

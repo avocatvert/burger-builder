@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Order from '../../components/Order/Order';
 import ErrorOrEmpty from './ErrorOrEmpty';
 
-import classes from './Orders.css';
+import classes from './Orders.module.css';
 import axios from '../../axios-orders';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -31,11 +31,11 @@ class Orders extends Component {
     render() {
         const orderVsSpinnerVsNodata = 
         this.props.orders ? 
-            this.parseOrders() :
+        this.parseOrders() :
         this.props.hasFetched ? 
-            <ErrorOrEmpty message='No Orders History was Found ...'/> :
+        <ErrorOrEmpty message='No Orders History was Found ...'/> :
         this.props.error ? 
-            <ErrorOrEmpty message='Sorry Orders Could not be Loaded...'/> :
+        <ErrorOrEmpty message='Sorry Orders Could not be Loaded...'/> :
         <Spinner message = 'Loading...' />
 
 

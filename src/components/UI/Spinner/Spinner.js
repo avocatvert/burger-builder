@@ -1,16 +1,15 @@
 import React from 'react';
-import Aux from '../../../hoc/Aux/Aux';
-import classes from './Spinner.css';
+import classes from './Spinner.module.css';
 
 
 
 function spinner(props) {
     return (
-        <Aux>   
+        <React.Fragment>   
             <div className={classes.Loader}>
             </div>
             <h4 style={{textAlign:"center"}}>{props.message}</h4>
-        </Aux>
+        </React.Fragment>
             
         
     );

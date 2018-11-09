@@ -7,12 +7,12 @@
     box-shadow: 1px 1px 1px black;
     padding: 16px;
     left: 15%;
-    top:30%;
+    top:15%;
     overflow: auto;
     box-sizing: border-box;
     /*transition: all 5s ease-out;*/
     -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.3s;
+    -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s
 }
@@ -39,18 +39,31 @@
 
 @-webkit-keyframes animatetop {
     from {top:-2px;opacity: 0}
-    to {top:30%; opacity:1}
+    to {top:15%; opacity:1}
 }
 
 @keyframes animatetop {
     from {top: -2px; opacity: 0}
-    to {top:30%; opacity:1}
+    to {top:15%; opacity:1}
 }
 
 /* responsive */
-@media (min-width: 600px) {
+@media (min-width: 600px) and  (min-height:641px) {
     .Modal {
         width: 400px;
         left: calc(50% - 200px);
+        top:25%
     }
+
+
+    @-webkit-keyframes animatetop {
+        from {top:-2px;opacity: 0}
+        to {top:25%; opacity:1}
+    }
+
+    @keyframes animatetop {
+        from {top: -2px; opacity: 0}
+        to {top:25%; opacity:1}
+    }
+
 }

@@ -1,22 +1,22 @@
 import React from 'react';
-import NavItem  from './NavItem/NavItem';
-import classes from "./NavItems.css";
+import NavItemsLogged from './NavItemsLogged';
+import NavItemsNotLogged from './NavItemsNotLogged';
+import classes from "./NavItems.module.css";
 
-function navItems() {
-    // let isActive=false
-    // const becomeActive = () => {isActive=true}
-    // console.log('isActive ', isActive);
-    
+import {connect} from 'react-redux';
 
+function navItems({userLogged}) {
+ 
     return (
         <ul className={classes.NavItems}>
-            <NavItem link='/burger-builder'> Burger Builder</NavItem>
-
-            <NavItem link="/orders" > Orders </NavItem>
-
+            {userLogged ? <NavItemsLogged/> : <NavItemsNotLogged/>}
         </ul>
     );
 
 }
 
-export default navItems;
+const mapStateToProps = (state) => (
+        {userLogged : state.authRDUX.login_success}
+    )
+
+export default connect(mapStateToProps)(navItems);

@@ -1,11 +1,8 @@
 import React from 'react';
 import Burger from '../../Burger/Burger';
-// import Aux from '../../../hoc/Aux/Aux';
-import Summary,{Functions} from '../Summary';
-
+import IngredientSummary from '../IngredientSummary';
 import Button from '../../UI/Button/Button';
-
-import classes from './CheckoutSummary.css';
+import classes from './CheckoutSummary.module.css';
 
 const maskElement= (shouldmask) => (
     {display: shouldmask ? 'none' : null}
@@ -13,7 +10,6 @@ const maskElement= (shouldmask) => (
 
 const CheckoutSummary = (props) => {
     
-
     const totalPrice = props.totalPrice;
 
     const SummaryDisplay=
@@ -23,7 +19,7 @@ const CheckoutSummary = (props) => {
             <h3> Your Order</h3>
             <p>A delicious burger with the following ingredients: </p>
             <ul>
-                {Summary(props.ingredients)}
+                <IngredientSummary ingredients= {props.ingredients} />
             </ul>
             
             <Button clicked={props.cancel} btnType="Cancel">
@@ -51,4 +47,3 @@ const CheckoutSummary = (props) => {
 
 
 export default CheckoutSummary;
-export {Functions};

@@ -1,68 +1,34 @@
 import React, { Component } from 'react';
-import Button from '../../../components/UI/Button/Button';
-import classes from './ContactData.css';
+// import classes from './ContactData.module.css';
 import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import Input from '../../../components/UI/Input/Input';
-
-import orderForm from './orderForm';
+import Modal from '../../../components/UI/Modal/Modal';
 
 import {connect} from 'react-redux';
 import * as actions from '../../../store/actions/burgerActions';
+import Form from '../../../components/UI/Form/Form';
+import fields from './orderForm';
 
 
 
 class ContactData extends Component {
 
-    state = {orderForm, purchaseRunning:false};
+    state = {
+        isSendingData:false,
+        showModal : true
+    };
 
-
-    _checkValidity = (value,required) =>{
-        if(required){
-            value = value.trim();
-            const isMinLength = value.length >= 6
-            const isMaxLength = value.length < 20
-            return isMinLength && isMaxLength;
-        }
-        return true    
-    }
-
-
-    _allValid = () => (
-       ! Object.values(this.state.orderForm.inputs)
-        .some( (el) => !el.validation.isValid )
-    )
-                           
-
-    _onInputChange = (event,id) => {
-        const form = {...this.state.orderForm} //clone 
-        const formInputs = {...form.inputs} //deep clone
-        const elt = {...formInputs[id]} // deep clone 
-        const eltValidation = {...elt.validation} // deep clone
-        
-        elt.value = event.target.value //update value of element
-        elt.touched=true
-        
-        //only when validation check is required
-        eltValidation.isValid = this._checkValidity(elt.value, eltValidation.required)
-        elt.validation = eltValidation  //change copy
-        
-        
-        formInputs[id] = elt  //update form.inputs with udpated element
-        form.inputs = formInputs
-        this.setState({orderForm : form })
-    }
 
     sendData = (evt) => {
         evt.preventDefault();
         this.setState({
-            purchaseRunning: true
+            isSendingData: true
         })
         this.sendingPurchase()
         
     }
 
-    sendingPurchase = () => {
+    sendingPurchase = () => {  //TO CHANGE TO NEW FORM COMPONENT
         const orderData ={};
         for (let k in this.state.orderForm.inputs){
             orderData[k]= this.state.orderForm.inputs[k].value;
@@ -74,51 +40,46 @@ class ContactData extends Component {
             order:orderData
         };
 
-        // console.log(order);
-        //alert('You continue!')
+     
         axios.post('/orders.json', order)
             .then(response => {
-                this.setState({purchaseRunning:false});
+                this.setState({isSendingData:false});
                 this.props.resetIngredients();
                 this.props.history.push('/');    
             })
             .catch(error => {
-                this.setState({purchaseRunning:false});
+                this.setState({isSendingData:false});
                 this.props.resetIngredients();
                 this.props.history.push('/');    
             })
     }
 
+    closeModal = () => {
+        if (this.isSendingData) return;
+        this.setState({showModal:false});
+        this.props.history.goBack();
+    }
+
     render() {
 
+        const contactDataSpinner = this.state.isSendingData?
+        <Spinner message='Saving Order...'/> :
+        <div >
+            <Form 
+            fields= {fields}
+            buttonLabel = 'Send your order'
+            title = { <h5> Enter your contact Data </h5>}
+            /> 
+        </div>
+
         return (
-            this.state.purchaseRunning? <Spinner message='Saving Order...'/> 
-            :
-            <div className={classes.ContactData}>
-                <h4>Enter your contact Data</h4>
-
-                <form onSubmit = {this.sendData}>
-
-                    {
-                    Object.entries(this.state.orderForm.inputs).map( elt =>
-                        <Input key = {elt[0]}
-                            elementType={elt[1].elementType}
-                            elementConfig= {elt[1].elementConfig } 
-                            value={elt[1].value}
-                            isValid={elt[1].validation.isValid}
-                            touched ={elt[1].touched}
-                            changed={ event => this._onInputChange(event,elt[0]) }
-                            />
-                        )
-                    }
-                        
-                        <Button 
-                            btnType='Continue' 
-                            disabled={ !this._allValid() }>
-                            ORDER 
-                        </Button>
-                </form> 
-            </div>
+            <Modal 
+            style = {{width: '500px', left: 'calc(50% - 250px)'}}
+            show={this.state.showModal}
+            close={this.closeModal}
+            reRender={this.state.isSendingData}>
+                {contactDataSpinner}  
+            </Modal>    
         );
     }
 }

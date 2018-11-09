@@ -1,13 +1,30 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
+/*/node_modules
 /node_modules
+
+
+#vscode
+.vscode
+
+#css
+*/materialize
+
+#storybook
+.storybook
+
+#firebase config
+.firebase*
+firebase.json
+
 
 # testing
 /coverage
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -23,6 +40,11 @@ yarn-error.log*
 /scripts
 /config
 /public
+
+
+*package-lock.json
+*package.json
+*yarn.lock
 package-lock.json
 package.json
 yarn.lock

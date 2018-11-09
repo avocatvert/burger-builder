@@ -1,7 +1,7 @@
 import React from 'react';
 import BurgerIngredient from  './BurgerIngredient/BurgerIngredient';
 import Spinner from '../UI/Spinner/Spinner';
-import classes from './Burger.css';
+import classes from './Burger.module.css';
 
 // -----BUILD THE BURGER -----
 //loop over ingredients object ex obj = {'cheese':2} and build array 
